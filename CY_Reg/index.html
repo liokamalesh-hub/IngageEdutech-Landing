@@ -4,14 +4,15 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Google Generative AI Program | inGage</title>
+  <title>Google Cyber Security Program | inGage</title>
 
-  <!-- Google Fonts: Plus Jakarta Sans, Caveat & Lora (Serif) -->
+  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
 
-  <!-- Apple San Francisco (SF Pro Display) Web Font -->
+  <!-- San Francisco (SF Pro Display) Font -->
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
 
   <!-- Pure Vanilla CSS3 Stylesheet -->
@@ -50,15 +51,17 @@
 
           <!-- Title & 3D Emblem Group -->
           <div class="hero-title-group">
-            <!-- 3D AI Glowing Emblem -->
+            <!-- 3D Cyber Security Glowing Emblem -->
             <div class="hero-emblem">
               <div class="hero-emblem-glow"></div>
               <div class="hero-emblem-inner">
                 <svg class="hero-emblem-spark" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+                  <path
+                    d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z">
+                  </path>
                 </svg>
-                <span class="hero-emblem-text">AI</span>
-                <span class="hero-emblem-subtag">GEN-AI</span>
+                <span class="hero-emblem-text">CY</span>
+                <span class="hero-emblem-subtag">SECURITY</span>
               </div>
             </div>
 
@@ -74,7 +77,7 @@
               </div>
 
               <h1 class="hero-title font-san-francisco">
-                Google <span class="shimmer-text font-san-francisco">Generative AI</span> <span
+                Google <span class="shimmer-text font-san-francisco">Cyber Security</span> <span
                   class="hero-title-accent font-san-francisco">Program</span>
               </h1>
 
@@ -115,8 +118,7 @@
         <!-- Right Hero Visual Illustration with Curved Borders -->
         <div class="hero-visual">
           <div class="hero-curved-img-wrap">
-            <img src="../src/genai-card-bg.jpg" alt="Google Generative AI Robot with Neural Brain"
-              loading="eager" />
+            <img src="../src/cyber-security-card-bg.jpg" alt="Google Generative AI Robot with Neural Brain" loading="eager" />
           </div>
         </div>
       </div>
@@ -286,7 +288,7 @@
     <main class="reg-section" id="registration-section" data-purpose="registration-form-section">
       <div class="content-container">
 
-        <div class="reg-form-card scroll-reveal" id="student-registration-card">
+        <div class="reg-form-card scroll-reveal">
           <div class="reg-top-glow-line"></div>
 
           <!-- Section Heading -->
@@ -295,7 +297,7 @@
               Student Registration Form
             </h2>
             <p class="reg-subheading">
-              Secure your seat in the Google Generative AI Program &amp; claim your complimentary second course
+              Secure your seat in the Google Cyber Security Program &amp; claim your high demand course
             </p>
 
             <!-- Trust Seals Ribbon -->
@@ -416,7 +418,7 @@
                 <!-- High Demand Course Selection Announcement -->
                 <div class="selected-badge-pill">
                   <span class="selected-badge-icon">⚡</span>
-                  <span class="selected-badge-text">YOU SELECTED GENAI AS YOUR HIGH DEMAND COURSE</span>
+                  <span class="selected-badge-text">YOU SELECTED GOOGLE CYBER SECURITY COURSE</span>
                   <span class="pulse-dot-green"></span>
                 </div>
 
@@ -468,12 +470,10 @@
                 <div class="free-course-header-row">
                   <div>
                     <div class="free-course-title-group">
-                      <label class="free-course-label" for="free-course">Select Your Free Course</label>
-                      <span class="bonus-pill-tag">
-                        <span>🎁</span> 100% Free Bonus
-                      </span>
+                      <label class="free-course-label" for="free-course">Select Your High Demand Course</label>
                     </div>
-                    <p class="free-course-subtitle">Choose your complimentary Google program under the Special Limited
+                    <p class="free-course-subtitle">Choose your high demand Google program at ₹499 under the Special
+                      Limited
                       Offer (Worth ₹2499).</p>
                   </div>
                 </div>
@@ -482,26 +482,27 @@
                 <div class="native-dropdown-wrap">
                   <select class="form-select" id="free-course" name="freeCourse" onchange="syncFromDropdown(this.value)"
                     required="">
-                    <option disabled="" selected="" value="">Choose your free course</option>
-                    <option value="data-analytics">Google Data Analytics Program</option>
-                    <option value="cyber-security">Google Cyber Security Program</option>
+                    <option disabled="" selected="" value="">Choose your high-demand course</option>
+                    <option value="generative-ai">Google Generative AI Program</option>
+                    <option value="cloud-foundations">Google Cloud Computing Foundations</option>
+                    <option value="cloud-engineering">Google Cloud Engineering Program</option>
                   </select>
                 </div>
 
                 <!-- Interactive Selectable Course Cards -->
                 <div class="free-course-cards-grid" id="course-cards-container">
 
-                  <!-- Card 1: Google Data Analytics -->
-                  <div class="free-course-card" id="card-data-analytics" onclick="selectCourse('data-analytics')"
+                  <!-- Card 1: Google Generative AI -->
+                  <div class="free-course-card" id="card-generative-ai" onclick="selectCourse('generative-ai')"
                     role="button" tabindex="0">
 
-                    <!-- Hover Popup: Data Analytics -->
-                    <div class="da-popup" id="data-analytics-popup">
+                    <!-- Hover Popup: Generative AI -->
+                    <div class="da-popup" id="generative-ai-popup">
                       <div class="popup-top-glow-blue"></div>
                       <div class="popup-header">
                         <div>
                           <div class="popup-tag-cyan">★ Google Free Bonus Program</div>
-                          <h4 class="popup-heading">Google Data Analytics Program</h4>
+                          <h4 class="popup-heading">Google Generative AI Program</h4>
                         </div>
                         <div style="text-align: right; flex-shrink: 0;">
                           <span class="popup-strike-tag">₹2499</span>
@@ -510,8 +511,7 @@
                       </div>
 
                       <p class="popup-summary">
-                        Master in-demand skills to collect, clean, analyze, and visualize data using Google Cloud tools
-                        and interactive dashboards.
+                        Master prompt engineering, foundation models, enterprise RAG, and AI application building.
                       </p>
 
                       <!-- Key Quick Facts -->
@@ -524,7 +524,7 @@
                         <div class="popup-stat-box-cyan">
                           <div>🛠️</div>
                           <div class="stat-val-cyan">Skill Badges</div>
-                          <div class="stat-label-sub">Labs &amp; Projects</div>
+                          <div class="stat-label-sub">Google Cloud AI Labs</div>
                         </div>
                         <div class="popup-stat-box-emerald">
                           <div>🎯</div>
@@ -536,23 +536,21 @@
                       <!-- What You Will Learn -->
                       <div class="popup-learn-list">
                         <div class="popup-learn-item">
-                          <span>📊</span>
-                          <div><strong>Data Cleaning &amp; SQL:</strong> Clean, validate &amp; prepare raw datasets
+                          <span>⚡</span>
+                          <div><strong>Prompt Engineering:</strong> Design, tune &amp; optimize prompts for LLMs</div>
+                        </div>
+                        <div class="popup-learn-item">
+                          <span>🧠</span>
+                          <div><strong>Foundation Models:</strong> Build with Gemini, PaLM &amp; multimodal AI</div>
+                        </div>
+                        <div class="popup-learn-item">
+                          <span>🚀</span>
+                          <div><strong>Enterprise RAG:</strong> Vector search, embeddings &amp; retrieval pipelines
                           </div>
                         </div>
                         <div class="popup-learn-item">
-                          <span>📈</span>
-                          <div><strong>Predictive Analytics:</strong> Forecast trends &amp; derive actionable insights
-                          </div>
-                        </div>
-                        <div class="popup-learn-item">
-                          <span>📉</span>
-                          <div><strong>Dashboards &amp; Tableau:</strong> Build visual reports to optimize decisions
-                          </div>
-                        </div>
-                        <div class="popup-learn-item">
-                          <span>☁️</span>
-                          <div><strong>Cloud Pipelines:</strong> Build and run analytics on Google Cloud</div>
+                          <span>🛠️</span>
+                          <div><strong>AI Applications:</strong> Deploy production-ready Generative AI solutions</div>
                         </div>
                       </div>
 
@@ -561,17 +559,16 @@
                         <span class="popup-badges-pill">✓ Skill Badges</span>
                       </div>
 
-                      <div class="da-arrow" id="da-arrow"></div>
+                      <div class="da-arrow" id="genai-arrow"></div>
                     </div>
 
                     <div>
                       <div class="card-img-banner">
-                        <img src="../src/data-analytics-card-bg.jpg" alt="Google Data Analytics Program"
-                          loading="lazy" />
+                        <img src="../src/genai-card-bg.jpg" alt="Google Generative AI Program" loading="lazy" />
                       </div>
                       <div class="card-bonus-badge">★ Free Bonus</div>
-                      <h4 class="card-title">Google Data Analytics Program</h4>
-                      <p class="card-desc">Data Cleaning, Analysis, Visualization &amp; Problem Solving</p>
+                      <h4 class="card-title">Google Generative AI Program</h4>
+                      <p class="card-desc">Prompt Engineering, Foundation Models, RAG &amp; Application Building</p>
                     </div>
 
                     <div class="card-footer-row">
@@ -583,17 +580,17 @@
                     </div>
                   </div>
 
-                  <!-- Card 2: Google Cyber Security -->
-                  <div class="free-course-card" id="card-cyber-security" onclick="selectCourse('cyber-security')"
+                  <!-- Card 2: Google Cloud Computing Foundations -->
+                  <div class="free-course-card" id="card-cloud-foundations" onclick="selectCourse('cloud-foundations')"
                     role="button" tabindex="0">
 
-                    <!-- Hover Popup: Cyber Security -->
-                    <div class="da-popup" id="cyber-security-popup">
+                    <!-- Hover Popup: Cloud Foundations -->
+                    <div class="da-popup" id="cloud-foundations-popup">
                       <div class="popup-top-glow-purple"></div>
                       <div class="popup-header">
                         <div>
                           <div class="popup-tag-purple">★ Google Free Bonus Program</div>
-                          <h4 class="popup-heading">Google Cyber Security Program</h4>
+                          <h4 class="popup-heading">Google Cloud Computing Foundations</h4>
                         </div>
                         <div style="text-align: right; flex-shrink: 0;">
                           <span class="popup-strike-tag">₹2499</span>
@@ -602,8 +599,8 @@
                       </div>
 
                       <p class="popup-summary">
-                        Gain hands-on skills to detect cyber threats, protect devices and networks, and automate
-                        security defense using Python.
+                        Master cloud infrastructure, networking, big data, and machine learning foundations on Google
+                        Cloud.
                       </p>
 
                       <!-- Key Quick Facts -->
@@ -616,7 +613,7 @@
                         <div class="popup-stat-box-indigo">
                           <div>🛠️</div>
                           <div class="stat-val-indigo">Skill Badges</div>
-                          <div class="stat-label-sub">Labs &amp; SIEM Tools</div>
+                          <div class="stat-label-sub">GCP Foundations Labs</div>
                         </div>
                         <div class="popup-stat-box-blue">
                           <div>🎯</div>
@@ -628,20 +625,22 @@
                       <!-- What You Will Learn -->
                       <div class="popup-learn-list">
                         <div class="popup-learn-item">
-                          <span>🛡️</span>
-                          <div><strong>Threat Defense:</strong> Detect vulnerabilities &amp; mitigate cyber risks</div>
+                          <span>☁️</span>
+                          <div><strong>Cloud Infrastructure:</strong> Core GCP compute, storage &amp; cloud services
+                          </div>
                         </div>
                         <div class="popup-learn-item">
                           <span>🌐</span>
-                          <div><strong>Network Security:</strong> Configure firewalls, IDS &amp; access controls</div>
+                          <div><strong>Networking &amp; Security:</strong> VPC architectures, routing &amp; IAM controls
+                          </div>
                         </div>
                         <div class="popup-learn-item">
-                          <span>🔍</span>
-                          <div><strong>SIEM &amp; Forensics:</strong> Analyze logs &amp; manage security incidents</div>
+                          <span>📊</span>
+                          <div><strong>Big Data &amp; Analytics:</strong> BigQuery analysis &amp; data pipelines</div>
                         </div>
                         <div class="popup-learn-item">
-                          <span>🐍</span>
-                          <div><strong>Python Automation:</strong> Automate defense with Python scripts</div>
+                          <span>🤖</span>
+                          <div><strong>AI &amp; Machine Learning:</strong> Google Cloud AI solutions &amp; ML APIs</div>
                         </div>
                       </div>
 
@@ -651,17 +650,112 @@
                         <span class="popup-badges-pill">✓ Skill Badges</span>
                       </div>
 
-                      <div class="da-arrow" id="cs-arrow"></div>
+                      <div class="da-arrow" id="cf-arrow"></div>
                     </div>
 
                     <div>
                       <div class="card-img-banner">
-                        <img src="../src/cyber-security-card-bg.jpg" alt="Google Cyber Security Program"
+                        <img src="../src/gccf-card-bg.jpg" alt="Google Cloud Computing Foundations"
                           loading="lazy" />
                       </div>
                       <div class="card-bonus-badge">★ Free Bonus</div>
-                      <h4 class="card-title">Google Cyber Security Program</h4>
-                      <p class="card-desc">Threat Analysis, SIEM Tools, Network Security &amp; Response</p>
+                      <h4 class="card-title">Google Cloud Computing Foundations</h4>
+                      <p class="card-desc">Cloud Infrastructure, Big Data, Networking &amp; Machine Learning</p>
+                    </div>
+
+                    <div class="card-footer-row">
+                      <div>
+                        <span class="strike-2499">₹2499</span>
+                        <span class="free-highlight">FREE</span>
+                      </div>
+                      <button class="card-action-btn action-btn" type="button">Select Course</button>
+                    </div>
+                  </div>
+
+                  <!-- Card 3: Google Cloud Engineering -->
+                  <div class="free-course-card" id="card-cloud-engineering" onclick="selectCourse('cloud-engineering')"
+                    role="button" tabindex="0">
+
+                    <!-- Hover Popup: Cloud Engineering -->
+                    <div class="da-popup" id="cloud-engineering-popup">
+                      <div class="popup-top-glow-cyan"></div>
+                      <div class="popup-header">
+                        <div>
+                          <div class="popup-tag-cyan"
+                            style="background: rgba(14, 165, 233, 0.1); color: #0284c7; border: 1px solid rgba(14, 165, 233, 0.3);">
+                            ★ Google Free Bonus Program</div>
+                          <h4 class="popup-heading">Google Cloud Engineering Program</h4>
+                        </div>
+                        <div style="text-align: right; flex-shrink: 0;">
+                          <span class="popup-strike-tag">₹2499</span>
+                          <span class="popup-free-pill">100% FREE</span>
+                        </div>
+                      </div>
+
+                      <p class="popup-summary">
+                        Deploy, configure, and manage scalable cloud infrastructure, containers, and CI/CD on GCP.
+                      </p>
+
+                      <!-- Key Quick Facts -->
+                      <div class="popup-stats-grid">
+                        <div class="popup-stat-box-cyan">
+                          <div>⏱️</div>
+                          <div class="stat-val-cyan">5 Days</div>
+                          <div class="stat-label-sub">Self-Paced / In-Person</div>
+                        </div>
+                        <div class="popup-stat-box-blue">
+                          <div>🛠️</div>
+                          <div class="stat-val-blue">Skill Badges</div>
+                          <div class="stat-label-sub">GCP Labs &amp; DevOps</div>
+                        </div>
+                        <div class="popup-stat-box-emerald">
+                          <div>🎯</div>
+                          <div class="stat-val-emerald">All Depts</div>
+                          <div class="stat-label-sub">Engg, Arts &amp; Poly</div>
+                        </div>
+                      </div>
+
+                      <!-- What You Will Learn -->
+                      <div class="popup-learn-list">
+                        <div class="popup-learn-item">
+                          <span>☁️</span>
+                          <div><strong>Core Infrastructure:</strong> Compute Engine, VPC networks &amp; Cloud Storage
+                          </div>
+                        </div>
+                        <div class="popup-learn-item">
+                          <span>⚓</span>
+                          <div><strong>Kubernetes &amp; GKE:</strong> Container clusters, orchestration &amp; scaling
+                          </div>
+                        </div>
+                        <div class="popup-learn-item">
+                          <span>🚀</span>
+                          <div><strong>DevOps &amp; CI/CD:</strong> Automated pipelines &amp; infrastructure as code
+                          </div>
+                        </div>
+                        <div class="popup-learn-item">
+                          <span>🔒</span>
+                          <div><strong>IAM &amp; Monitoring:</strong> Cloud IAM controls, security &amp; Cloud
+                            Monitoring</div>
+                        </div>
+                      </div>
+
+                      <div class="popup-bottom-row">
+                        <span class="popup-pick-prompt" style="color: #0284c7;">👆 Click card to choose this free
+                          bonus</span>
+                        <span class="popup-badges-pill">✓ Skill Badges</span>
+                      </div>
+
+                      <div class="da-arrow" id="ce-arrow"></div>
+                    </div>
+
+                    <div>
+                      <div class="card-img-banner">
+                        <img src="../src/cloud-eng-card-bg.jpg" alt="Google Cloud Engineering Program"
+                          loading="lazy" />
+                      </div>
+                      <div class="card-bonus-badge">★ Free Bonus</div>
+                      <h4 class="card-title">Google Cloud Engineering Program</h4>
+                      <p class="card-desc">Cloud Infrastructure, Compute Engine, Kubernetes &amp; DevOps</p>
                     </div>
 
                     <div class="card-footer-row">
@@ -724,12 +818,12 @@
     </main>
 
     <!-- ====================================================================
-         4. CORE AI COMPETENCIES & INDUSTRY IMPACT
+         4. CORE CLOUD SECURITY COMPETENCIES & INDUSTRY IMPACT
          ==================================================================== -->
     <section class="curriculum-section" data-purpose="core-competencies">
       <div class="content-container">
 
-        <!-- Section Title: Core AI Competencies -->
+        <!-- Section Title: Core Cloud Security Competencies -->
         <div class="curriculum-header scroll-reveal">
           <div class="curriculum-title-wrap">
             <span class="curriculum-icon-badge">
@@ -740,95 +834,100 @@
             </span>
             <div>
               <h2 class="curriculum-heading font-san-francisco">
-                Core AI Competencies &amp; Industry Impact
+                Core Cloud Security Competencies &amp; Industry Impact
               </h2>
-              <p class="curriculum-subtext">Master high-demand Generative AI skills through step-by-step guided
-                enterprise projects</p>
+              <p class="curriculum-subtext">Master high-demand Cloud Security skills through step-by-step guided
+                enterprise implementations.</p>
             </div>
           </div>
         </div>
 
-        <!-- 4 Core AI Learning Modules Grid (Short, Attractive Copy) -->
+        <!-- 4 Core Cloud Security Learning Modules Grid -->
         <div class="curriculum-grid">
-          <!-- Card 1: Prompt Design -->
+          <!-- Card 1: Cloud Security Fundamentals & IAM -->
           <article class="module-card module-card-cyan scroll-reveal">
             <div>
               <div class="module-icon-wrap module-icon-cyan">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <h3 class="module-title">Master Prompt Design &amp; LLMs</h3>
-              <p class="module-desc">
-                Learn prompt crafting, context tuning, and conversation design hands-on with live LLMs.
-              </p>
-            </div>
-            <div class="module-footer-pill">
-              <span>⚡ Prompting &amp; LLM Essentials</span>
-              <span class="module-arrow">→</span>
-            </div>
-          </article>
-
-          <!-- Card 2: Foundation Models -->
-          <article class="module-card module-card-blue scroll-reveal">
-            <div>
-              <div class="module-icon-wrap module-icon-blue">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                  </path>
-                </svg>
-              </div>
-              <h3 class="module-title">Foundation Models &amp; Cloud Labs</h3>
-              <p class="module-desc">
-                Practice multimodal architectures and official Google AI toolkits in live interactive cloud labs.
-              </p>
-            </div>
-            <div class="module-footer-pill">
-              <span>🧠 Hands-On Google Cloud Labs</span>
-              <span class="module-arrow">→</span>
-            </div>
-          </article>
-
-          <!-- Card 3: AI APIs & RAG -->
-          <article class="module-card module-card-purple scroll-reveal">
-            <div>
-              <div class="module-icon-wrap module-icon-purple">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                  </path>
-                </svg>
-              </div>
-              <h3 class="module-title">AI APIs &amp; Enterprise RAG</h3>
-              <p class="module-desc">
-                Connect Generative AI APIs, implement intelligent RAG pipelines, and build deployable apps.
-              </p>
-            </div>
-            <div class="module-footer-pill">
-              <span>🚀 Enterprise RAG &amp; App Building</span>
-              <span class="module-arrow">→</span>
-            </div>
-          </article>
-
-          <!-- Card 4: AI Ethics & Placement -->
-          <article class="module-card module-card-emerald scroll-reveal">
-            <div>
-              <div class="module-icon-wrap module-icon-emerald">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
                   </path>
                 </svg>
               </div>
-              <h3 class="module-title">AI Ethics &amp; Placement Advantage</h3>
+              <h3 class="module-title">Cloud Security Fundamentals &amp; IAM</h3>
               <p class="module-desc">
-                Earn verified Google skill badges, apply responsible AI benchmarks, and boost your job profile.
+                Understand core cybersecurity principles and Google Cloud security infrastructure while implementing
+                identity and access management (IAM) controls.
               </p>
             </div>
             <div class="module-footer-pill">
-              <span>🛡️ Google Badges &amp; Placement</span>
+              <span>⚡ Security Concepts &amp; IAM Controls</span>
+              <span class="module-arrow">→</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Data Protection & Encryption -->
+          <article class="module-card module-card-blue scroll-reveal">
+            <div>
+              <div class="module-icon-wrap module-icon-blue">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="module-title">Data Protection &amp; Encryption</h3>
+              <p class="module-desc">
+                Secure cloud infrastructure and protect sensitive data using encryption tools for both at-rest and
+                in-transit scenarios.
+              </p>
+            </div>
+            <div class="module-footer-pill">
+              <span>🔐 Data Encryption &amp; Cloud Protection</span>
+              <span class="module-arrow">→</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Network Security & Threat Defense -->
+          <article class="module-card module-card-purple scroll-reveal">
+            <div>
+              <div class="module-icon-wrap module-icon-purple">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="module-title">Network Security &amp; Threat Defense</h3>
+              <p class="module-desc">
+                Configure network security parameters to protect cloud resources, identify threats, and manage system
+                vulnerabilities.
+              </p>
+            </div>
+            <div class="module-footer-pill">
+              <span>🌐 Network Security &amp; Vulnerability Analysis</span>
+              <span class="module-arrow">→</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Incident Monitoring & Industry Placement -->
+          <article class="module-card module-card-emerald scroll-reveal">
+            <div>
+              <div class="module-icon-wrap module-icon-emerald">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="module-title">Incident Monitoring &amp; Industry Placement</h3>
+              <p class="module-desc">
+                Monitor, detect, and respond to security incidents while maintaining industry-standard compliance to
+                build job-ready cybersecurity skills.
+              </p>
+            </div>
+            <div class="module-footer-pill">
+              <span>🚀 Threat Monitoring &amp; Placement Readiness</span>
               <span class="module-arrow">→</span>
             </div>
           </article>
@@ -1073,7 +1172,8 @@
         <div>
           <div class="modal-badge-top">★ SPECIAL LIMITED OFFER - 100% FREE BONUS ★</div>
           <h3 class="modal-title">Choose Your Complimentary Google Program</h3>
-          <p class="modal-subtext">Select one high-demand program included at ₹0 with your Generative AI enrollment.</p>
+          <p class="modal-subtext">Select one high-demand program included at ₹0 with your Cyber Security enrollment.
+          </p>
         </div>
         <button aria-label="Close modal" class="modal-close-btn" onclick="closeCourseModal()" type="button">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1085,56 +1185,59 @@
       <!-- Modal Body -->
       <div class="modal-body">
         <div class="modal-cards-grid">
-          <!-- Data Analytics -->
-          <div class="modal-course-card" id="modal-card-data-analytics">
+          <!-- Generative AI -->
+          <div class="modal-course-card" id="modal-card-generative-ai">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span class="popup-tag-cyan">Analytics &amp; BI Track</span>
+                <span class="popup-tag-cyan"
+                  style="background: rgba(6, 182, 212, 0.1); color: #0891b2; border: 1px solid rgba(6, 182, 212, 0.3);">Gen-AI
+                  &amp; LLMs Track</span>
                 <span style="font-size: 11px; font-weight: 800; color: #94a3b8; text-decoration: line-through;">
                   ₹2499 <strong style="color: #059669; text-decoration: none;">FREE</strong>
                 </span>
               </div>
-              <h4 style="font-size: 15px; font-weight: 900; color: #0f172a; margin-bottom: 6px;">Google Data Analytics
+              <h4 style="font-size: 15px; font-weight: 900; color: #0f172a; margin-bottom: 6px;">Google Generative AI
                 Program</h4>
               <p style="font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 12px;">
-                Master in-demand skills to collect, clean, analyze, and visualize data using Google Cloud tools and
-                interactive dashboards.
+                Master prompt engineering, foundation models, and enterprise RAG architecture to build and deploy modern
+                AI solutions using Google Cloud AI tools.
               </p>
               <div class="popup-stats-grid" style="margin-bottom: 12px;">
                 <div class="popup-stat-box-blue">
                   <div class="stat-val-blue">5 Days</div>
                   <div class="stat-label-sub">Self-Paced / In-Person</div>
                 </div>
-                <div class="popup-stat-box-blue">
-                  <div class="stat-val-blue">Skill Badges</div>
-                  <div class="stat-label-sub">Labs &amp; Projects</div>
+                <div class="popup-stat-box-cyan">
+                  <div class="stat-val-cyan">Skill Badges</div>
+                  <div class="stat-label-sub">Google Cloud AI Labs</div>
                 </div>
-                <div class="popup-stat-box-blue">
-                  <div class="stat-val-blue">All Depts</div>
+                <div class="popup-stat-box-emerald">
+                  <div class="stat-val-emerald">All Depts</div>
                   <div class="stat-label-sub">Engg, Arts &amp; Poly</div>
                 </div>
               </div>
             </div>
-            <button class="btn-submit-main" onclick="selectCourseAndClose('data-analytics')"
-              style="padding: 10px; font-size: 13px;" type="button">
-              Choose Google Data Analytics
+            <button class="btn-submit-main" onclick="selectCourseAndClose('generative-ai')"
+              style="padding: 10px; font-size: 13px; background: linear-gradient(90deg, #0284c7, #2563eb);"
+              type="button">
+              Choose Google Generative AI
             </button>
           </div>
 
-          <!-- Cyber Security -->
-          <div class="modal-course-card" id="modal-card-cyber-security">
+          <!-- Cloud Computing Foundations -->
+          <div class="modal-course-card" id="modal-card-cloud-foundations">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span class="popup-tag-purple">Defense &amp; SecOps Track</span>
+                <span class="popup-tag-purple">Cloud Foundations Track</span>
                 <span style="font-size: 11px; font-weight: 800; color: #94a3b8; text-decoration: line-through;">
                   ₹2499 <strong style="color: #059669; text-decoration: none;">FREE</strong>
                 </span>
               </div>
-              <h4 style="font-size: 15px; font-weight: 900; color: #0f172a; margin-bottom: 6px;">Google Cyber Security
-                Program</h4>
+              <h4 style="font-size: 15px; font-weight: 900; color: #0f172a; margin-bottom: 6px;">Google Cloud Computing
+                Foundations</h4>
               <p style="font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 12px;">
-                Identify threats, vulnerabilities, and mitigate security risks. Learn hands-on incident response and
-                network architecture defenses.
+                Master core cloud infrastructure, networking, data analytics, and machine learning solutions on Google
+                Cloud Platform.
               </p>
               <div class="popup-stats-grid" style="margin-bottom: 12px;">
                 <div class="popup-stat-box-purple">
@@ -1143,7 +1246,7 @@
                 </div>
                 <div class="popup-stat-box-purple">
                   <div class="stat-val-purple">Skill Badges</div>
-                  <div class="stat-label-sub">Labs &amp; SIEM Tools</div>
+                  <div class="stat-label-sub">GCP Foundations Labs</div>
                 </div>
                 <div class="popup-stat-box-purple">
                   <div class="stat-val-purple">All Depts</div>
@@ -1151,10 +1254,49 @@
                 </div>
               </div>
             </div>
-            <button class="btn-submit-main" onclick="selectCourseAndClose('cyber-security')"
+            <button class="btn-submit-main" onclick="selectCourseAndClose('cloud-foundations')"
               style="padding: 10px; font-size: 13px; background: linear-gradient(90deg, #7c3aed, #4f46e5);"
               type="button">
-              Choose Google Cyber Security
+              Choose Google Cloud Foundations
+            </button>
+          </div>
+
+          <!-- Cloud Engineering -->
+          <div class="modal-course-card" id="modal-card-cloud-engineering">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span class="popup-tag-cyan"
+                  style="background: rgba(14, 165, 233, 0.1); color: #0284c7; border: 1px solid rgba(14, 165, 233, 0.3);">Cloud
+                  &amp; DevOps Track</span>
+                <span style="font-size: 11px; font-weight: 800; color: #94a3b8; text-decoration: line-through;">
+                  ₹2499 <strong style="color: #059669; text-decoration: none;">FREE</strong>
+                </span>
+              </div>
+              <h4 style="font-size: 15px; font-weight: 900; color: #0f172a; margin-bottom: 6px;">Google Cloud
+                Engineering Program</h4>
+              <p style="font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 12px;">
+                Deploy, configure, and manage scalable cloud architecture, containers, and infrastructure on Google
+                Cloud Platform.
+              </p>
+              <div class="popup-stats-grid" style="margin-bottom: 12px;">
+                <div class="popup-stat-box-cyan">
+                  <div class="stat-val-cyan">5 Days</div>
+                  <div class="stat-label-sub">Self-Paced / In-Person</div>
+                </div>
+                <div class="popup-stat-box-cyan">
+                  <div class="stat-val-cyan">Skill Badges</div>
+                  <div class="stat-label-sub">GCP Labs &amp; DevOps</div>
+                </div>
+                <div class="popup-stat-box-cyan">
+                  <div class="stat-val-cyan">All Depts</div>
+                  <div class="stat-label-sub">Engg, Arts &amp; Poly</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn-submit-main" onclick="selectCourseAndClose('cloud-engineering')"
+              style="padding: 10px; font-size: 13px; background: linear-gradient(90deg, #0284c7, #2563eb);"
+              type="button">
+              Choose Google Cloud Engineering
             </button>
           </div>
         </div>
@@ -1162,7 +1304,8 @@
 
       <!-- Modal Footer -->
       <div class="modal-footer">
-        <span style="color: #64748b; font-size: 11px;">100% Free as part of the Google Gen-AI enrollment offer.</span>
+        <span style="color: #64748b; font-size: 11px;">100% Free as part of the Google Cyber Security enrollment
+          offer.</span>
         <button class="modal-footer-cancel-btn" onclick="closeCourseModal()" type="button">Close</button>
       </div>
     </div>

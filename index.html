@@ -864,15 +864,15 @@
           <!-- CTA Footer: Enroll Now & View Detail -->
           <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
             <!-- Enroll Now Button (Primary) -->
-            <button class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition">
+            <a href="DA_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
               <span>Enroll Now</span>
               <i class="fa-solid fa-circle-chevron-right text-[10px] sm:text-xs"></i>
-            </button>
+            </a>
             <!-- View Detail Button (Secondary) -->
-            <button data-action="view-detail" data-course="data-analytics" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-white hover:bg-blue-50 text-blue-600 border-2 border-blue-600 font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center gap-1 sm:gap-1.5 transition cursor-pointer">
+            <a href="DA_Reg/index.html" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-white hover:bg-blue-50 text-blue-600 border-2 border-blue-600 font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center gap-1 sm:gap-1.5 transition cursor-pointer text-center no-underline">
               <span>View Detail</span>
               <i class="fa-solid fa-circle-info text-[10px] sm:text-xs"></i>
-            </button>
+            </a>
           </div>
         </div>
 
@@ -1015,15 +1015,15 @@
           <!-- CTA Footer: Enroll Now & View Detail -->
           <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
             <!-- Enroll Now Button (Primary) -->
-            <button class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition">
+            <a href="CY_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
               <span>Enroll Now</span>
               <i class="fa-solid fa-circle-chevron-right text-[10px] sm:text-xs"></i>
-            </button>
+            </a>
             <!-- View Detail Button (Secondary) -->
-            <button data-action="view-detail" data-course="cyber-security" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-white hover:bg-blue-50 text-blue-600 border-2 border-blue-600 font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center gap-1 sm:gap-1.5 transition cursor-pointer">
+            <a href="CY_Reg/index.html" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-white hover:bg-blue-50 text-blue-600 border-2 border-blue-600 font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center gap-1 sm:gap-1.5 transition cursor-pointer text-center no-underline">
               <span>View Detail</span>
               <i class="fa-solid fa-circle-info text-[10px] sm:text-xs"></i>
-            </button>
+            </a>
           </div>
         </div>
 
@@ -1366,13 +1366,69 @@
 
     </div>
 
+    <!-- 3 Step Process Cards: Exact Animation & Styles from Reg files -->
+    <style>
+      .cert-step-card {
+        background-color: #ffffff;
+        border-radius: 20px;
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+      }
+
+      .cert-step-card:hover,
+      .cert-step-card.is-revealed:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+      }
+
+      .cert-step-featured {
+        border: 2px solid #10b981 !important;
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15) !important;
+      }
+
+      .cert-step-featured:hover,
+      .cert-step-featured.is-revealed:hover {
+        box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25) !important;
+      }
+
+      .cert-step-img-wrap img {
+        transition: transform 0.5s ease-out;
+      }
+
+      .cert-step-card:hover .cert-step-img-wrap img {
+        transform: scale(1.05);
+      }
+
+      /* Scroll-reveal entrance animation matching Reg files */
+      .cert-step-card.scroll-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      .cert-step-card.scroll-reveal.is-revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .cert-step-card:nth-child(1) { transition-delay: 0.04s; }
+      .cert-step-card:nth-child(2) { transition-delay: 0.14s; }
+      .cert-step-card:nth-child(3) { transition-delay: 0.24s; }
+    </style>
+
     <!-- 3 Step Process Cards Grid: 1st Image on Top, Text Below -->
     <div class="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch relative z-10">
 
-      <!-- Step 1 Card: Image on top, Text below (Static) -->
-      <div class="bg-white rounded-2xl border-2 border-slate-200/90 shadow-soft overflow-hidden flex flex-col justify-between hover:border-blue-400 hover:shadow-card transition duration-300">
+      <!-- Step 1 Card: Image on top, Text below -->
+      <div class="cert-step-card scroll-reveal group cursor-pointer">
         <!-- 1st: Image on top -->
-        <div class="h-44 sm:h-52 w-full overflow-hidden relative bg-slate-950 flex-shrink-0">
+        <div class="cert-step-img-wrap h-44 sm:h-52 w-full overflow-hidden relative bg-slate-950 flex-shrink-0">
           <img src="src/complete_course.jpg" alt="Course Completed - Earn Your Badge" class="w-full h-full object-cover object-top" />
           <span class="absolute top-2 left-2.5 sm:top-2.5 sm:left-3 px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-blue-600 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-md z-10">
             STEP 1
@@ -1397,16 +1453,16 @@
         </div>
       </div>
 
-      <!-- Step 2 Card: Image on top, Text below (Static) -->
-      <div class="bg-white rounded-2xl border-2 border-emerald-300 shadow-soft overflow-hidden flex flex-col justify-between hover:border-emerald-500 hover:shadow-card transition duration-300">
-        <!-- 1st: Voucher Visual Banner on top (New 75% OFF ribbon design) -->
-        <div class="h-44 sm:h-52 w-full overflow-hidden relative bg-slate-950 flex-shrink-0">
+      <!-- Step 2 Card: Image on top, Text below (Featured Highlight) -->
+      <div class="cert-step-card cert-step-featured scroll-reveal group cursor-pointer relative">
+        <!-- 1st: Voucher Visual Banner on top -->
+        <div class="cert-step-img-wrap h-44 sm:h-52 w-full overflow-hidden relative bg-slate-950 flex-shrink-0">
           <img src="src/step2-exclusive-voucher-bg.jpg" alt="Exclusive 75% OFF Exam Voucher" class="w-full h-full object-cover object-center" />
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none"></div>
-          <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-black uppercase tracking-wider shadow-md">
+          <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-black uppercase tracking-wider shadow-md z-10">
             STEP 2
           </span>
-          <span class="absolute top-3.5 right-3.5 w-9 h-9 rounded-xl bg-emerald-900/80 backdrop-blur-md text-emerald-300 border border-emerald-400/40 flex items-center justify-center text-sm shadow">
+          <span class="absolute top-3.5 right-3.5 w-9 h-9 rounded-xl bg-emerald-900/80 backdrop-blur-md text-emerald-300 border border-emerald-400/40 flex items-center justify-center text-sm shadow z-10">
             <i class="fa-solid fa-ticket"></i>
           </span>
         </div>
@@ -1428,9 +1484,9 @@
       </div>
 
       <!-- Step 3 Card: Image on top, Text below -->
-      <div class="bg-white rounded-2xl border-2 border-slate-200/90 shadow-soft overflow-hidden flex flex-col justify-between hover:border-amber-400 hover:shadow-card transition duration-300">
+      <div class="cert-step-card scroll-reveal group cursor-pointer">
         <!-- 1st: Image on top (Responsive containment for full certificate readability) -->
-        <div class="h-44 sm:h-52 w-full overflow-hidden relative bg-slate-900 flex-shrink-0 border-b border-slate-100 flex items-center justify-center">
+        <div class="cert-step-img-wrap h-44 sm:h-52 w-full overflow-hidden relative bg-slate-900 flex-shrink-0 border-b border-slate-100 flex items-center justify-center">
           <img src="src/final_crt.jpg" alt="Google Cloud Certified Generative AI Leader" class="w-full h-full object-contain sm:object-cover object-center" />
           <span class="absolute top-2 left-2.5 sm:top-2.5 sm:left-3 px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-amber-500 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-md z-10">
             STEP 3
@@ -1456,6 +1512,37 @@
       </div>
 
     </div>
+
+    <!-- Scroll Reveal Activation Script -->
+    <script>
+      (function() {
+        function initCertScroll() {
+          var items = document.querySelectorAll('.cert-step-card.scroll-reveal');
+          if (!items.length) return;
+          if ('IntersectionObserver' in window) {
+            var observer = new IntersectionObserver(function(entries) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+            items.forEach(function(el) { observer.observe(el); });
+          } else {
+            items.forEach(function(el) { el.classList.add('is-revealed'); });
+          }
+          setTimeout(function() {
+            items.forEach(function(el) { el.classList.add('is-revealed'); });
+          }, 1200);
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCertScroll);
+        } else {
+          initCertScroll();
+        }
+      })();
+    </script>
 
     <!-- Bottom Row: Important Notice Box -->
     <div class="mt-8 bg-white border-2 border-blue-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs relative z-10">
