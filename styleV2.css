@@ -457,5 +457,11 @@ body.modal-open {
   overflow: hidden !important;
 }
 
-
-
+/* Complimentary Course Cards: match primary cards width with custom spacing */
+@media (min-width: 768px) {
+  .complimentary-course-card {
+    width: calc((100% - 3rem) / 3) !important;
+    max-width: calc((100% - 3rem) / 3) !important;
+    flex: 0 0 calc((100% - 3rem) / 3) !important;
+  }
+}

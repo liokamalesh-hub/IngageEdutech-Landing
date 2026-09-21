@@ -358,6 +358,18 @@ function openCourseModal(courseId) {
 
   if (enrollBtn) {
     enrollBtn.onclick = () => {
+      if (courseId === 'genai') {
+        window.location.href = 'GenAI_Reg/index.html#registration-section';
+        return;
+      }
+      if (courseId === 'gccf') {
+        window.location.href = 'GCCF_Reg/index.html#registration-section';
+        return;
+      }
+      if (courseId === 'cloud-eng' || courseId === 'gce') {
+        window.location.href = 'GCE_Reg/index.html#registration-section';
+        return;
+      }
       closeCourseModal();
       scrollToRegistration();
     };
@@ -392,6 +404,28 @@ function initInteractiveButtons() {
   document.querySelectorAll('button').forEach(btn => {
     const text = btn.innerText.trim();
     if (text.includes('Enroll Now')) {
+      const card = btn.closest('[data-course="genai"]') || btn.closest('[data-course="gccf"]') || btn.closest('[data-course="cloud-eng"]') || btn.closest('article');
+      if (card && (card.getAttribute('data-course') === 'genai' || card.innerText.includes('Google Generative AI Program'))) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = 'GenAI_Reg/index.html#registration-section';
+        });
+        return;
+      }
+      if (card && (card.getAttribute('data-course') === 'gccf' || card.innerText.includes('Google Cloud Computing Foundations') || card.innerText.includes('GCCF'))) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = 'GCCF_Reg/index.html#registration-section';
+        });
+        return;
+      }
+      if (card && (card.getAttribute('data-course') === 'cloud-eng' || card.getAttribute('data-course') === 'gce' || card.innerText.includes('Google Cloud Engineering') || card.innerText.includes('Cloud Engineering'))) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = 'GCE_Reg/index.html#registration-section';
+        });
+        return;
+      }
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         scrollToRegistration();
@@ -402,9 +436,21 @@ function initInteractiveButtons() {
   // Wire up View Detail buttons
   document.querySelectorAll('[data-action="view-detail"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      const courseId = btn.getAttribute('data-course');
+      if (courseId === 'genai') {
+        window.location.href = 'GenAI_Reg/index.html';
+        return;
+      }
+      if (courseId === 'gccf') {
+        window.location.href = 'GCCF_Reg/index.html';
+        return;
+      }
+      if (courseId === 'cloud-eng' || courseId === 'gce') {
+        window.location.href = 'GCE_Reg/index.html';
+        return;
+      }
       e.preventDefault();
       e.stopPropagation();
-      const courseId = btn.getAttribute('data-course');
       if (courseId) {
         openCourseModal(courseId);
       }
