@@ -60,7 +60,7 @@ function drawDiagramConnections() {
     { cardId: 'card-software', color: '#f59e0b', strokeDash: '4,4', side: 'left' },
     { cardId: 'card-data', color: '#16a34a', strokeDash: '4,4', side: 'right' },
     { cardId: 'card-cyber', color: '#2563eb', strokeDash: '4,4', side: 'right' },
-    { cardId: 'card-badge', color: '#3b82f6', strokeDash: '4,4', side: 'right' }
+    { cardId: 'card-badge', color: '#6366f1', strokeDash: '4,4', side: 'right' }
   ];
 
   let svgContent = '';
@@ -478,5 +478,46 @@ function initInteractiveButtons() {
 
 window.addEventListener('DOMContentLoaded', () => {
   initInteractiveButtons();
+  initGenAIFlipCard();
 });
+
+// Initialize 3D Swap Card for All Course Cards
+function initGenAIFlipCard() {
+  const flipCards = document.querySelectorAll('.course-flip-card, #genai-flip-card');
+  if (!flipCards.length) return;
+
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  flipCards.forEach(flipCard => {
+    const flipBadgeTrigger = flipCard.querySelector('.flip-badge-trigger');
+    if (flipBadgeTrigger) {
+      flipBadgeTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        flipCard.classList.toggle('is-flipped');
+      });
+    }
+
+    const flipBackTrigger = flipCard.querySelector('.flip-back-trigger');
+    if (flipBackTrigger) {
+      flipBackTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        flipCard.classList.remove('is-flipped');
+      });
+    }
+
+    // Support tap-to-flip on touch/mobile devices on the card body only
+    if (isTouch) {
+      const cardBody = flipCard.querySelector('.course-flip-card-body, .genai-flip-card-body');
+      if (cardBody) {
+        cardBody.addEventListener('click', (e) => {
+          if (e.target.closest('a') || e.target.closest('button')) return;
+          flipCard.classList.toggle('is-flipped');
+        });
+      }
+    }
+  });
+}
+
 

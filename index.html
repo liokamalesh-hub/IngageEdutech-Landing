@@ -22,16 +22,95 @@
 <!-- Tailwind CSS v3 with Forms & Container Queries -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-<!-- Custom Stylesheet -->
-<link rel="stylesheet" href="styleV2.css"/>
+<!-- Custom Stylesheet (with cache buster) -->
+<link rel="stylesheet" href="styleV2.css?v=20260922_responsive"/>
 
-<!-- San Francisco Typography Priority -->
+<!-- San Francisco Typography Priority & GenAI Swap Card Styles -->
 <style>
   html, body, button, input, select, textarea {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
   .font-sf, .font-sans, .font-display, .font-title, .font-script {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  }
+
+  /* 3D Swap Rules for All Course Cards - Buttons never swap */
+  .course-flip-card, #genai-flip-card {
+    min-height: 100%;
+    position: relative;
+  }
+  .course-flip-card-body, .genai-flip-card-body {
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
+    position: relative;
+    z-index: 1;
+    min-height: 350px;
+  }
+  .course-flip-inner, .genai-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+  }
+  @media (hover: hover) {
+    .course-flip-card-body:hover, .genai-flip-card-body:hover {
+      z-index: 10 !important;
+    }
+    .course-flip-card-body:hover .course-flip-inner,
+    .course-flip-card-body:hover .genai-flip-inner,
+    .genai-flip-card-body:hover .course-flip-inner,
+    .genai-flip-card-body:hover .genai-flip-inner {
+      transform: rotateY(180deg);
+    }
+    /* Absolutely prevent any swap when cursor is over the buttons */
+    .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
+    .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
+    .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
+    .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+    #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+    #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
+      transform: rotateY(0deg) !important;
+    }
+  }
+  .course-flip-card.is-swapped .course-flip-inner,
+  .course-flip-card.is-flipped .course-flip-inner,
+  #genai-flip-card.is-swapped .genai-flip-inner,
+  #genai-flip-card.is-flipped .genai-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .card-fixed-buttons, .genai-card-buttons {
+    position: relative;
+    z-index: 20;
+  }
+  .course-flip-front, .genai-flip-front,
+  .course-flip-back, .genai-flip-back {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+  }
+  .course-flip-front, .genai-flip-front {
+    position: relative;
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+    z-index: 2;
+  }
+  .course-flip-back, .genai-flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    z-index: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .course-flip-card .course-hover-popover,
+  #genai-flip-card .course-hover-popover {
+    display: none !important;
   }
 </style>
 </head>
@@ -108,48 +187,48 @@
           <svg id="diagram-svg" class="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"></svg>
 
           <!-- Branching Diagram Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-4 items-center relative z-10 py-2">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-4 md:gap-5 items-center relative z-10 py-2">
             
             <!-- Left Branches (Shows above Hub on mobile, left on md+) -->
-            <div class="flex flex-col gap-3.5 sm:gap-5 order-2 md:order-1">
+            <div class="flex flex-col gap-3.5 sm:gap-4 md:gap-5 order-2 md:order-1">
               
               <!-- 1) Cloud Computing Foundations -->
-              <div id="card-cloud" class="diagram-card p-3 sm:p-3.5 bg-white rounded-2xl border-2 border-emerald-300 shadow-sm flex items-start gap-3 hover:shadow-md transition">
-                <div class="w-10 h-10 rounded-xl bg-white border-2 border-emerald-500 flex items-center justify-center text-emerald-600 flex-shrink-0 shadow-sm">
+              <div id="card-cloud" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-emerald-300 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
                   <i class="fa-solid fa-cloud text-base"></i>
                 </div>
-                <div>
-                  <h2 class="text-xs sm:text-sm font-bold text-slate-900">Cloud Computing Foundations</h2>
-                  <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Design, deploy &amp; manage scalable cloud solutions</p>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Cloud Computing Foundations</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Design, deploy &amp; manage scalable cloud solutions</p>
                 </div>
               </div>
               
               <!-- 2) Generative AI -->
-              <div id="card-genai" class="diagram-card p-3 sm:p-3.5 bg-white rounded-2xl border-2 border-purple-300 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+              <div id="card-genai" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-purple-300 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
                 <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white flex-shrink-0 shadow-sm">
                   <i class="fa-solid fa-brain text-lg"></i>
                 </div>
-                <div>
-                  <h2 class="text-xs sm:text-sm font-bold text-slate-900">Generative AI</h2>
-                  <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Build AI-powered solutions for real-world applications</p>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Generative AI</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Build AI-powered solutions for real-world applications</p>
                 </div>
               </div>
               
               <!-- 3) Google Cloud Engineering -->
-              <div id="card-software" class="diagram-card p-3 sm:p-3.5 bg-white rounded-2xl border-2 border-amber-300 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+              <div id="card-software" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-amber-300 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
                 <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white flex-shrink-0 shadow-sm">
                   <i class="fa-solid fa-server text-base"></i>
                 </div>
-                <div>
-                  <h2 class="text-xs sm:text-sm font-bold text-slate-900">Google Cloud Engineering</h2>
-                  <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Google Cloud services, alongside skills to deploy applications.</p>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Google Cloud Engineering</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Deploy &amp; manage enterprise cloud applications</p>
                 </div>
               </div>
               
             </div>
 
             <!-- Central Hub Node -->
-            <div class="flex flex-col items-center justify-center text-center px-2 py-2 sm:py-4 order-1 md:order-2 relative z-20">
+            <div class="flex flex-col items-center justify-center text-center px-1 sm:px-2 py-2 sm:py-4 order-1 md:order-2 relative z-20">
               <div id="hub-node" class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white border-4 border-slate-100 hub-glow-effect flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-xl cursor-pointer">
                 <!-- Google G 4-Color Logo SVG -->
                 <svg class="w-8 h-8 sm:w-10 sm:h-10 mb-1" viewBox="0 0 24 24">
@@ -165,44 +244,38 @@
             </div>
 
             <!-- Right Branches & Badge Note -->
-            <div class="flex flex-col gap-3.5 sm:gap-5 order-3">
+            <div class="flex flex-col gap-3.5 sm:gap-4 md:gap-5 order-3">
               
               <!-- Data Analytics -->
-              <div id="card-data" class="diagram-card p-3 sm:p-3.5 bg-white rounded-2xl border-2 border-emerald-400 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+              <div id="card-data" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-emerald-400 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
                 <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white flex-shrink-0 shadow-sm">
                   <i class="fa-solid fa-chart-line text-base"></i>
                 </div>
-                <div>
-                  <h2 class="text-xs sm:text-sm font-bold text-slate-900">Data Analytics</h2>
-                  <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Turn data into insights and drive better decisions</p>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Data Analytics</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Turn data into insights and drive better decisions</p>
                 </div>
               </div>
               
               <!-- Cybersecurity -->
-              <div id="card-cyber" class="diagram-card p-3 sm:p-3.5 bg-white rounded-2xl border-2 border-blue-400 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+              <div id="card-cyber" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-blue-400 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
                 <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white flex-shrink-0 shadow-sm">
                   <i class="fa-solid fa-shield-halved text-base"></i>
                 </div>
-                <div>
-                  <h2 class="text-xs sm:text-sm font-bold text-slate-900">Cybersecurity</h2>
-                  <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Learn to protect systems, data &amp; digital infrastructure</p>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Cybersecurity</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Protect systems, data &amp; digital infrastructure</p>
                 </div>
               </div>
               
               <!-- Badges & Ratings Callout Card -->
-              <div id="card-badge" class="diagram-card p-3 sm:p-3.5 bg-blue-50/80 rounded-2xl border border-dashed border-blue-400 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <i class="fa-solid fa-certificate text-lg"></i>
+              <div id="card-badge" class="diagram-card p-2.5 sm:p-3 bg-white rounded-2xl border-2 border-indigo-300 shadow-sm flex items-center gap-3 hover:shadow-md transition h-auto md:h-[96px]">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <i class="fa-solid fa-certificate text-base"></i>
                 </div>
-                <div>
-                  <div class="text-[11px] sm:text-xs font-bold text-slate-900 leading-tight">Earn Google Skill Badges &amp; Course Certificates</div>
-                  <div class="flex items-center gap-1 text-blue-600 text-[10px] mt-1">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                  </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Skill Badges &amp; Certificates</h3>
+                  <p class="text-[11px] text-slate-500 leading-tight mt-1">Earn recognized credentials to advance your career</p>
                 </div>
               </div>
               
@@ -284,7 +357,7 @@
         </div>
       </div>
       <!-- Highlight 5 -->
-      <div class="flex items-start gap-3.5 p-3 sm:p-2 rounded-2xl bg-white/70 sm:bg-transparent border border-emerald-100/60 sm:border-0 lg:border-l lg:border-slate-100 shadow-2xs sm:shadow-none hover:bg-slate-50 transition">
+      <div class="flex items-start gap-3.5 p-3 sm:p-2 rounded-2xl bg-white/70 sm:bg-transparent border border-emerald-100/60 sm:border-0 lg:border-l lg:border-slate-100 shadow-2xs sm:shadow-none hover:bg-slate-50 transition sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none w-full">
         <div class="w-11 h-11 rounded-full bg-rose-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
           <i class="fa-solid fa-user-tie text-lg"></i>
         </div>
@@ -324,60 +397,158 @@
         </span>
       </div>
 
-      <!-- 3-Column Course Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      <!-- Responsive Course Cards Grid: 1-col on mobile, 2-col on tablet, 3-col on desktop -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         
-        <!-- Card 1: Google Generative AI Program -->
-        <article class="group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="genai">
-          <!-- Top Course Thumbnail Image (Static) -->
-          <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl">
-            <img src="src/genai-card-bg.jpg" alt="Google Generative AI Program" class="w-full h-full object-cover object-center" />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
-            
-            <!-- Top Left: Google | inGage Brand Pill -->
-            <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
-              <span class="text-xs font-bold drop-shadow">
-                <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
-              </span>
-              <span class="text-slate-400 text-[10px] font-normal">|</span>
-              <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
-            </div>
+        <!-- Card 1: Google Generative AI Program (Fixed Buttons + 3D Swap Animation) -->
+        <article class="course-flip-card group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="genai" id="genai-flip-card">
+          
+          <!-- 3D Swapping Card Body (Image + Details) -->
+          <div class="course-flip-card-body genai-flip-card-body flex-1 relative w-full flex flex-col">
+            <div class="course-flip-inner genai-flip-inner w-full h-full flex-1">
+              
+              <!-- FRONT FACE -->
+              <div class="course-flip-front genai-flip-front bg-white rounded-t-3xl flex flex-col justify-between w-full h-full">
+                <!-- Top Course Thumbnail Image (Static) -->
+                <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl flex-shrink-0">
+                  <img src="src/genai-card-bg.jpg" alt="Google Generative AI Program" class="w-full h-full object-cover object-center" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
+                  
+                  <!-- Top Left: Google | inGage Brand Pill -->
+                  <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
+                    <span class="text-xs font-bold drop-shadow">
+                      <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                    </span>
+                    <span class="text-slate-400 text-[10px] font-normal">|</span>
+                    <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
+                  </div>
 
-            <!-- Top Right: Google Certification & High Demand Badges -->
-            <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  <!-- Top Right: Google Certification & High Demand Badges -->
+                  <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  </div>
+
+                </div>
+
+                <!-- Middle Details & Text -->
+                <div class="p-4 sm:p-6 pb-2 sm:pb-3 flex-1 flex flex-col justify-start bg-white text-left">
+                  <div class="flex items-start justify-between gap-2.5 sm:gap-3">
+                    <div>
+                      <!-- Course Title -->
+                      <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors font-bold">
+                        Google Generative AI Program
+                      </h3>
+
+                      <!-- Provider & Track Info -->
+                      <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
+                        Google &amp; InGage EduTech • Generative AI
+                      </p>
+                    </div>
+
+                    <!-- Duration & Price Rate -->
+                    <div class="flex flex-col items-end flex-shrink-0 text-right">
+                      <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
+                        <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
+                      </span>
+                      <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                        <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                        <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BACK FACE -->
+              <div class="course-flip-back genai-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+                <!-- Back Header: Title & Badges -->
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                      <i class="fa-solid fa-sparkles text-amber-300"></i>
+                      <span>What Learners Will Gain</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
+                      <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
+                    </span>
+                  </div>
+
+                  <div class="mt-2">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                      Google Generative AI Program
+                    </h4>
+                    <p class="text-[11px] text-slate-500 font-light mt-0.5">
+                      Industry-Aligned Training • Certification • Career Readiness
+                    </p>
+                  </div>
+                  <div class="w-12 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full mt-1.5 mb-2.5"></div>
+
+                  <!-- 4 Core Key Points (Diagram-Card Style) -->
+                  <div class="space-y-1.5">
+                    <!-- Point 1 -->
+                    <div class="p-2 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-xl border border-purple-100/90 shadow-2xs flex items-center gap-2.5 hover:border-purple-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Prompt Design &amp; Optimization</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Master context handling &amp; prompt design for accurate results</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 2 -->
+                    <div class="p-2 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-xl border border-blue-100/90 shadow-2xs flex items-center gap-2.5 hover:border-blue-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-brain text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Foundation &amp; Multimodal AI</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Hands-on experience with Google AI Tools, LLMs &amp; Gemini</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div class="p-2 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-xl border border-emerald-100/90 shadow-2xs flex items-center gap-2.5 hover:border-emerald-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-robot text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">APIs, RAG &amp; Automation</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Build and deploy production Generative AI applications</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 4 -->
+                    <div class="p-2 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-xl border border-amber-100/90 shadow-2xs flex items-center gap-2.5 hover:border-amber-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-shield-halved text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">AI Governance &amp; Ethics</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Ethical practices, evaluation &amp; safety in business scenarios</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Summary: Price & Duration -->
+                <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between">
+                  <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] font-semibold">
+                    <i class="fa-regular fa-clock text-blue-600 text-xs"></i> 5 Days Intensive
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                    <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Bottom: Course Details & Text -->
-          <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between bg-white text-left gap-4 sm:gap-5 rounded-b-3xl">
-            <div class="flex items-start justify-between gap-2.5 sm:gap-3">
-              <div>
-                <!-- Course Title -->
-                <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                  Google Generative AI Program
-                </h3>
-
-                <!-- Provider & Track Info -->
-                <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
-                  Google &amp; InGage EduTech • Generative AI
-                </p>
-              </div>
-
-              <!-- Duration & Price Rate -->
-              <div class="flex flex-col items-end flex-shrink-0 text-right">
-                <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
-                  <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
-                </span>
-                <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                  <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
-                  <span class="text-[11px] text-slate-400 font-normal line-through">₹3,289.00</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- CTA Footer: Enroll Now & View Detail -->
+          <!-- FIXED TWO BUTTONS IN SAME PLACE (Never flips, always static & in same position) -->
+          <div class="card-fixed-buttons genai-card-buttons relative z-20 p-4 sm:p-6 pt-1 sm:pt-2 pb-4 sm:pb-6 bg-white rounded-b-3xl">
             <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
               <!-- Enroll Now Button (Primary) -->
               <a href="GenAI_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
@@ -392,143 +563,156 @@
             </div>
           </div>
 
-          <!-- ========================================================================= -->
-          <!-- Right-Side Hover Popover: Key Points (Pure White Background, Desktop only)-->
-          <!-- ========================================================================= -->
-          <div class="course-hover-popover hidden md:flex absolute md:inset-auto md:left-[calc(100%+14px)] md:top-0 md:w-[420px] bg-white text-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 shadow-2xl z-50 flex-col">
-            
-            <!-- Left Arrow pointer for desktop (pointing to the card) -->
-            <div class="hidden md:block absolute top-9 -left-2.5 w-5 h-5 bg-white border-l-2 border-t-2 border-slate-200/90 rotate-[-45deg] z-10"></div>
-            
-            <!-- Invisible hover bridge between card and popover to prevent mouseleave -->
-            <div class="hidden md:block absolute -left-5 top-0 bottom-0 w-5 pointer-events-auto"></div>
-
-            <div>
-              <!-- Program Title & Subtitle with Badge -->
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                    <i class="fa-solid fa-sparkles text-amber-300"></i>
-                    <span>What Learners Will Gain</span>
-                  </div>
-                  <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
-                    <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
-                  </span>
-                </div>
-                
-                <h4 class="text-base font-black text-slate-900 leading-tight mt-2">
-                  Google Generative AI Program
-                </h4>
-                <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-                  Industry-Aligned Training • Certification • Career Readiness
-                </p>
-                <div class="w-12 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full mt-2"></div>
-              </div>
-
-              <!-- 4 Core Key Points (Diagram-Card Style matching Above Section) -->
-              <div class="space-y-2 mt-3">
-                
-                <!-- Point 1 -->
-                <div class="p-2.5 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-2xl border border-purple-100/90 shadow-2xs flex items-start gap-3 hover:border-purple-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Prompt Design &amp; Optimization</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Master context handling &amp; prompt design to generate accurate real-world results</p>
-                  </div>
-                </div>
-
-                <!-- Point 2 -->
-                <div class="p-2.5 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-2xl border border-blue-100/90 shadow-2xs flex items-start gap-3 hover:border-blue-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-brain text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Foundation &amp; Multimodal AI</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Hands-on experience with Foundation Models, Google AI Tools &amp; LLMs</p>
-                  </div>
-                </div>
-
-                <!-- Point 3 -->
-                <div class="p-2.5 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-2xl border border-emerald-100/90 shadow-2xs flex items-start gap-3 hover:border-emerald-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-robot text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">APIs, RAG &amp; Automation</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Build and deploy production Generative AI applications and workflows</p>
-                  </div>
-                </div>
-
-                <!-- Point 4 -->
-                <div class="p-2.5 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-2xl border border-amber-100/90 shadow-2xs flex items-start gap-3 hover:border-amber-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-shield-halved text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">AI Governance &amp; Ethics</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Ethical practices, model evaluation &amp; safety in practical business scenarios</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
         </article>
 
-        <!-- Card 2: Google Cloud Computing Foundations (GCCF) -->
-        <article class="group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="gccf">
-          <!-- Top Course Thumbnail Image (Static) -->
-          <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl">
-            <img src="src/gccf-card-bg.jpg" alt="Google Cloud Computing Foundations" class="w-full h-full object-cover object-center" />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
-            
-            <!-- Top Left: Google | inGage Brand Pill -->
-            <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
-              <span class="text-xs font-bold drop-shadow">
-                <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
-              </span>
-              <span class="text-slate-400 text-[10px] font-normal">|</span>
-              <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
-            </div>
+        <!-- Card 2: Google Cloud Computing Foundations (GCCF) (Fixed Buttons + 3D Swap Animation) -->
+        <article class="course-flip-card group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="gccf" id="gccf-flip-card">
+          
+          <!-- 3D Swapping Card Body (Image + Details) -->
+          <div class="course-flip-card-body flex-1 relative w-full flex flex-col">
+            <div class="course-flip-inner w-full h-full flex-1">
+              
+              <!-- FRONT FACE -->
+              <div class="course-flip-front bg-white rounded-t-3xl flex flex-col justify-between w-full h-full">
+                <!-- Top Course Thumbnail Image (Static) -->
+                <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl flex-shrink-0">
+                  <img src="src/gccf-card-bg.jpg" alt="Google Cloud Computing Foundations" class="w-full h-full object-cover object-center" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
+                  
+                  <!-- Top Left: Google | inGage Brand Pill -->
+                  <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
+                    <span class="text-xs font-bold drop-shadow">
+                      <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                    </span>
+                    <span class="text-slate-400 text-[10px] font-normal">|</span>
+                    <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
+                  </div>
 
-            <!-- Top Right: Google Certification & High Demand Badges -->
-            <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  <!-- Top Right: Google Certification & High Demand Badges -->
+                  <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  </div>
+                </div>
+
+                <!-- Middle Details & Text -->
+                <div class="p-4 sm:p-6 pb-2 sm:pb-3 flex-1 flex flex-col justify-start bg-white text-left">
+                  <div class="flex items-start justify-between gap-2.5 sm:gap-3">
+                    <div>
+                      <!-- Course Title -->
+                      <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors font-bold">
+                        Google Cloud Computing Foundations
+                      </h3>
+
+                      <!-- Provider & Track Info -->
+                      <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
+                        Google &amp; InGage EduTech • Cloud Computing Foundations
+                      </p>
+                    </div>
+
+                    <!-- Duration & Price Rate -->
+                    <div class="flex flex-col items-end flex-shrink-0 text-right">
+                      <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
+                        <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
+                      </span>
+                      <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                        <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                        <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BACK FACE -->
+              <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+                <!-- Back Header: Title & Badges -->
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                      <i class="fa-solid fa-sparkles text-amber-300"></i>
+                      <span>What Learners Will Gain</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
+                      <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
+                    </span>
+                  </div>
+
+                  <div class="mt-2">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                      Google Cloud Computing Foundations
+                    </h4>
+                    <p class="text-[11px] text-slate-500 font-light mt-0.5">
+                      Cloud Fundamentals • Real Console Labs • Global Badges
+                    </p>
+                  </div>
+                  <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-1.5 mb-2.5"></div>
+
+                  <!-- 4 Core Key Points (Diagram-Card Style) -->
+                  <div class="space-y-1.5">
+                    <!-- Point 1 -->
+                    <div class="p-2 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-xl border border-emerald-100/90 shadow-2xs flex items-center gap-2.5 hover:border-emerald-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-cloud text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Cloud Core Services</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Compute Engine, Cloud Storage, VPC networking &amp; databases</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 2 -->
+                    <div class="p-2 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-xl border border-blue-100/90 shadow-2xs flex items-center gap-2.5 hover:border-blue-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-laptop-code text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Hands-on Cloud Labs</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Architecture exercises on real Google Cloud console environments</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div class="p-2 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-xl border border-indigo-100/90 shadow-2xs flex items-center gap-2.5 hover:border-indigo-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-shield-halved text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Security, IAM &amp; Networking</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Access management, virtual firewalls &amp; compliance</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 4 -->
+                    <div class="p-2 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-xl border border-amber-100/90 shadow-2xs flex items-center gap-2.5 hover:border-amber-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-certificate text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Foundations Certification</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Globally recognized exam prep &amp; industry skills</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Summary: Price & Duration -->
+                <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between">
+                  <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] font-semibold">
+                    <i class="fa-regular fa-clock text-blue-600 text-xs"></i> 5 Days Intensive
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                    <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Bottom: Course Details & Text -->
-          <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between bg-white text-left gap-4 sm:gap-5 rounded-b-3xl">
-            <div class="flex items-start justify-between gap-2.5 sm:gap-3">
-              <div>
-                <!-- Course Title -->
-                <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                  Google Cloud Computing Foundations
-                </h3>
-
-                <!-- Provider & Track Info -->
-                <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
-                  Google &amp; InGage EduTech • Cloud Computing Foundations
-                </p>
-              </div>
-
-              <!-- Duration & Price Rate -->
-              <div class="flex flex-col items-end flex-shrink-0 text-right">
-                <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
-                  <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
-                </span>
-                <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                  <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
-                  <span class="text-[11px] text-slate-400 font-normal line-through">₹3,289.00</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- CTA Footer: Enroll Now & View Detail -->
+          <!-- FIXED TWO BUTTONS IN SAME PLACE (Never flips, always static & in same position) -->
+          <div class="card-fixed-buttons relative z-20 p-4 sm:p-6 pt-1 sm:pt-2 pb-4 sm:pb-6 bg-white rounded-b-3xl">
             <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
               <!-- Enroll Now Button (Primary) -->
               <a href="GCCF_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
@@ -543,143 +727,156 @@
             </div>
           </div>
 
-          <!-- ========================================================================= -->
-          <!-- Right-Side Hover Popover: Key Points (GCCF - Desktop only)                -->
-          <!-- ========================================================================= -->
-          <div class="course-hover-popover hidden md:flex absolute md:inset-auto md:left-[calc(100%+14px)] md:top-0 md:w-[420px] bg-white text-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 shadow-2xl z-50 flex-col">
-            
-            <!-- Left Arrow pointer for desktop (pointing to the card) -->
-            <div class="hidden md:block absolute top-9 -left-2.5 w-5 h-5 bg-white border-l-2 border-t-2 border-slate-200/90 rotate-[-45deg] z-10"></div>
-            
-            <!-- Invisible hover bridge between card and popover -->
-            <div class="hidden md:block absolute -left-5 top-0 bottom-0 w-5 pointer-events-auto"></div>
-
-            <div>
-              <!-- Program Title & Subtitle with Badge -->
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                    <i class="fa-solid fa-sparkles text-amber-300"></i>
-                    <span>What Learners Will Gain</span>
-                  </div>
-                  <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
-                    <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
-                  </span>
-                </div>
-                
-                <h4 class="text-base font-black text-slate-900 leading-tight mt-2">
-                  Google Cloud Computing Foundations
-                </h4>
-                <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-                  Cloud Fundamentals • Real Console Labs • Global Badges
-                </p>
-                <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2"></div>
-              </div>
-
-              <!-- 4 Core Key Points (Diagram-Card Style matching Above Section) -->
-              <div class="space-y-2 mt-3">
-                
-                <!-- Point 1 -->
-                <div class="p-2.5 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-2xl border border-emerald-100/90 shadow-2xs flex items-start gap-3 hover:border-emerald-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-cloud text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Cloud Core Services</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Compute Engine, Cloud Storage, VPC networking &amp; databases</p>
-                  </div>
-                </div>
-
-                <!-- Point 2 -->
-                <div class="p-2.5 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-2xl border border-blue-100/90 shadow-2xs flex items-start gap-3 hover:border-blue-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-laptop-code text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Hands-on Cloud Labs</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Architecture exercises on real Google Cloud console environments</p>
-                  </div>
-                </div>
-
-                <!-- Point 3 -->
-                <div class="p-2.5 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-2xl border border-indigo-100/90 shadow-2xs flex items-start gap-3 hover:border-indigo-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-shield-halved text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Security, IAM &amp; Networking</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Access management, virtual firewalls &amp; compliance</p>
-                  </div>
-                </div>
-
-                <!-- Point 4 -->
-                <div class="p-2.5 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-2xl border border-amber-100/90 shadow-2xs flex items-start gap-3 hover:border-amber-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-certificate text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Foundations Certification</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Globally recognized exam prep &amp; industry skills</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
         </article>
 
-        <!-- Card 3: Google Cloud Engineering Program -->
-        <article class="group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="cloud-eng">
-          <!-- Top Course Thumbnail Image (Static) -->
-          <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl">
-            <img src="src/cloud-eng-card-bg.jpg" alt="Google Cloud Engineering" class="w-full h-full object-cover object-center" />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
-            
-            <!-- Top Left: Google | inGage Brand Pill -->
-            <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
-              <span class="text-xs font-bold drop-shadow">
-                <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
-              </span>
-              <span class="text-slate-400 text-[10px] font-normal">|</span>
-              <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
-            </div>
+        <!-- Card 3: Google Cloud Engineering Program (Fixed Buttons + 3D Swap Animation, Centered on Tablet) -->
+        <article class="course-flip-card group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300 sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none w-full" data-purpose="course-card" data-course="cloud-eng" id="cloud-eng-flip-card">
+          
+          <!-- 3D Swapping Card Body (Image + Details) -->
+          <div class="course-flip-card-body flex-1 relative w-full flex flex-col">
+            <div class="course-flip-inner w-full h-full flex-1">
+              
+              <!-- FRONT FACE -->
+              <div class="course-flip-front bg-white rounded-t-3xl flex flex-col justify-between w-full h-full">
+                <!-- Top Course Thumbnail Image (Static) -->
+                <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl flex-shrink-0">
+                  <img src="src/cloud-eng-card-bg.jpg" alt="Google Cloud Engineering" class="w-full h-full object-cover object-center" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
+                  
+                  <!-- Top Left: Google | inGage Brand Pill -->
+                  <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
+                    <span class="text-xs font-bold drop-shadow">
+                      <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                    </span>
+                    <span class="text-slate-400 text-[10px] font-normal">|</span>
+                    <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
+                  </div>
 
-            <!-- Top Right: Google Certification & High Demand Badges -->
-            <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
-              <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  <!-- Top Right: Google Certification & High Demand Badges -->
+                  <div class="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1">
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Google Certification</span>
+                    <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">★ High Demand</span>
+                  </div>
+                </div>
+
+                <!-- Middle Details & Text -->
+                <div class="p-4 sm:p-6 pb-2 sm:pb-3 flex-1 flex flex-col justify-start bg-white text-left">
+                  <div class="flex items-start justify-between gap-2.5 sm:gap-3">
+                    <div>
+                      <!-- Course Title -->
+                      <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors font-bold">
+                        Google Cloud Engineering Program
+                      </h3>
+
+                      <!-- Provider & Track Info -->
+                      <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
+                        Google &amp; InGage EduTech • Google Cloud Engineering
+                      </p>
+                    </div>
+
+                    <!-- Duration & Price Rate -->
+                    <div class="flex flex-col items-end flex-shrink-0 text-right">
+                      <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
+                        <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
+                      </span>
+                      <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                        <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                        <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BACK FACE -->
+              <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+                <!-- Back Header: Title & Badges -->
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                      <i class="fa-solid fa-sparkles text-amber-300"></i>
+                      <span>What Learners Will Gain</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
+                      <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
+                    </span>
+                  </div>
+
+                  <div class="mt-2">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                      Google Cloud Engineering Program
+                    </h4>
+                    <p class="text-[11px] text-slate-500 font-light mt-0.5">
+                      Kubernetes • CI/CD Pipelines • Production Architecture
+                    </p>
+                  </div>
+                  <div class="w-12 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-1.5 mb-2.5"></div>
+
+                  <!-- 4 Core Key Points (Diagram-Card Style) -->
+                  <div class="space-y-1.5">
+                    <!-- Point 1 -->
+                    <div class="p-2 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-xl border border-blue-100/90 shadow-2xs flex items-center gap-2.5 hover:border-blue-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-server text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Infrastructure Architecture</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Design &amp; deploy scalable, resilient cloud applications</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 2 -->
+                    <div class="p-2 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-xl border border-indigo-100/90 shadow-2xs flex items-center gap-2.5 hover:border-indigo-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-cubes text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Kubernetes &amp; Containers</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Containerized microservices on Google Kubernetes Engine (GKE)</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div class="p-2 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-xl border border-purple-100/90 shadow-2xs flex items-center gap-2.5 hover:border-purple-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-gears text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">DevOps &amp; Automation</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">CI/CD deployment pipelines &amp; Infrastructure-as-Code</p>
+                      </div>
+                    </div>
+
+                    <!-- Point 4 -->
+                    <div class="p-2 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-xl border border-emerald-100/90 shadow-2xs flex items-center gap-2.5 hover:border-emerald-300 transition duration-200">
+                      <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-chart-line text-[10px]"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <h5 class="text-xs font-bold text-slate-900 leading-tight">Site Reliability (SRE)</h5>
+                        <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Monitoring, auto-scaling &amp; production troubleshooting</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Summary: Price & Duration -->
+                <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between">
+                  <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] font-semibold">
+                    <i class="fa-regular fa-clock text-blue-600 text-xs"></i> 5 Days Intensive
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                    <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Bottom: Course Details & Text -->
-          <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between bg-white text-left gap-4 sm:gap-5 rounded-b-3xl">
-            <div class="flex items-start justify-between gap-2.5 sm:gap-3">
-              <div>
-                <!-- Course Title -->
-                <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                  Google Cloud Engineering Program
-                </h3>
-
-                <!-- Provider & Track Info -->
-                <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
-                  Google &amp; InGage EduTech • Google Cloud Engineering
-                </p>
-              </div>
-
-              <!-- Duration & Price Rate -->
-              <div class="flex flex-col items-end flex-shrink-0 text-right">
-                <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
-                  <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
-                </span>
-                <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                  <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
-                  <span class="text-[11px] text-slate-400 font-normal line-through">₹3,289.00</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- CTA Footer: Enroll Now & View Detail -->
+          <!-- FIXED TWO BUTTONS IN SAME PLACE (Never flips, always static & in same position) -->
+          <div class="card-fixed-buttons relative z-20 p-4 sm:p-6 pt-1 sm:pt-2 pb-4 sm:pb-6 bg-white rounded-b-3xl">
             <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
               <!-- Enroll Now Button (Primary) -->
               <a href="GCE_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
@@ -694,90 +891,6 @@
             </div>
           </div>
 
-          <!-- ========================================================================= -->
-          <!-- Left-Side Hover Popover: Key Points (GCE - Desktop only)                  -->
-          <!-- ========================================================================= -->
-          <div class="course-hover-popover popover-left hidden md:flex absolute md:inset-auto md:right-[calc(100%+14px)] md:left-auto md:top-0 md:w-[420px] bg-white text-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 shadow-2xl z-50 flex-col">
-            
-            <!-- Right Arrow pointer for desktop (pointing right to Card 3) -->
-            <div class="hidden md:block absolute top-9 -right-2.5 w-5 h-5 bg-white border-r-2 border-t-2 border-slate-200/90 rotate-[45deg] z-10"></div>
-            
-            <!-- Invisible hover bridge on right side -->
-            <div class="hidden md:block absolute -right-5 top-0 bottom-0 w-5 pointer-events-auto"></div>
-
-            <div>
-              <!-- Program Title & Subtitle with Badge -->
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                    <i class="fa-solid fa-sparkles text-amber-300"></i>
-                    <span>What Learners Will Gain</span>
-                  </div>
-                  <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
-                    <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
-                  </span>
-                </div>
-                
-                <h4 class="text-base font-black text-slate-900 leading-tight mt-2">
-                  Google Cloud Engineering Program
-                </h4>
-                <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-                  Kubernetes • CI/CD Pipelines • Production Architecture
-                </p>
-                <div class="w-12 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-2"></div>
-              </div>
-
-              <!-- 4 Core Key Points (Diagram-Card Style matching Above Section) -->
-              <div class="space-y-2 mt-3">
-                
-                <!-- Point 1 -->
-                <div class="p-2.5 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-2xl border border-blue-100/90 shadow-2xs flex items-start gap-3 hover:border-blue-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-server text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Infrastructure Architecture</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Design &amp; deploy scalable, resilient cloud applications</p>
-                  </div>
-                </div>
-
-                <!-- Point 2 -->
-                <div class="p-2.5 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-2xl border border-indigo-100/90 shadow-2xs flex items-start gap-3 hover:border-indigo-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-cubes text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Kubernetes &amp; Containers</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Containerized microservices on Google Kubernetes Engine (GKE)</p>
-                  </div>
-                </div>
-
-                <!-- Point 3 -->
-                <div class="p-2.5 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-2xl border border-purple-100/90 shadow-2xs flex items-start gap-3 hover:border-purple-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-gears text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">DevOps &amp; Automation</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">CI/CD deployment pipelines &amp; Infrastructure-as-Code</p>
-                  </div>
-                </div>
-
-                <!-- Point 4 -->
-                <div class="p-2.5 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-2xl border border-emerald-100/90 shadow-2xs flex items-start gap-3 hover:border-emerald-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                    <i class="fa-solid fa-chart-line text-xs"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-900 leading-tight">Site Reliability (SRE)</h5>
-                    <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Monitoring, auto-scaling &amp; production troubleshooting</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
         </article>
 
       </div>
@@ -808,60 +921,157 @@
       </div>
     </div>
 
-    <!-- Two Combined Complimentary Course Cards (Horizontal Matching Row 1 Sizing with Comfortable Spacing) -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 md:gap-10 lg:gap-16 my-4">
+    <!-- Two Combined Complimentary Course Cards (Fluid responsive flex layout for mobile, tablet & desktop) -->
+    <div class="flex flex-col sm:flex-row justify-center items-stretch gap-6 md:gap-8 lg:gap-12 my-4">
       
-      <!-- Card 4: Google Data Analytics Program -->
-      <article class="complimentary-course-card w-full group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card">
-        <!-- Top Course Thumbnail Image (Static) -->
-        <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl">
-          <img src="src/data-analytics-card-bg.jpg" alt="Google Data Analytics Program" class="w-full h-full object-cover object-center" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
-          
-          <!-- Top Left: Google | inGage Brand Pill -->
-          <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
-            <span class="text-xs font-bold drop-shadow">
-              <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
-            </span>
-            <span class="text-slate-400 text-[10px] font-normal">|</span>
-            <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
-          </div>
+      <!-- Card 4: Google Data Analytics Program (Fixed Buttons + 3D Swap Animation) -->
+      <article class="complimentary-course-card w-full course-flip-card group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="data-analytics" id="data-analytics-flip-card">
+        
+        <!-- 3D Swapping Card Body (Image + Details) -->
+        <div class="course-flip-card-body flex-1 relative w-full flex flex-col">
+          <div class="course-flip-inner w-full h-full flex-1">
+            
+            <!-- FRONT FACE -->
+            <div class="course-flip-front bg-white rounded-t-3xl flex flex-col justify-between w-full h-full">
+              <!-- Top Course Thumbnail Image (Static) -->
+              <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl flex-shrink-0">
+                <img src="src/data-analytics-card-bg.jpg" alt="Google Data Analytics Program" class="w-full h-full object-cover object-center" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
+                
+                <!-- Top Left: Google | inGage Brand Pill -->
+                <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
+                  <span class="text-xs font-bold drop-shadow">
+                    <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                  </span>
+                  <span class="text-slate-400 text-[10px] font-normal">|</span>
+                  <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
+                </div>
 
-          <!-- Top Right: Complimentary & Award Badges -->
-          <div class="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">
-            <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Complimentary</span>
-            <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md"><i class="fa-solid fa-award"></i></span>
+                <!-- Top Right: Complimentary & Award Badges -->
+                <div class="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">
+                  <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Complimentary</span>
+                  <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md"><i class="fa-solid fa-award"></i></span>
+                </div>
+              </div>
+
+              <!-- Middle Details & Text -->
+              <div class="p-4 sm:p-6 pb-2 sm:pb-3 flex-1 flex flex-col justify-start bg-white text-left">
+                <div class="flex items-start justify-between gap-2.5 sm:gap-3">
+                  <div>
+                    <!-- Course Title -->
+                    <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors font-bold">
+                      Google Data Analytics Program
+                    </h3>
+
+                    <!-- Provider & Track Info -->
+                    <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
+                      Google &amp; InGage EduTech • Data Analytics
+                    </p>
+                  </div>
+
+                  <!-- Duration & Price Rate -->
+                  <div class="flex flex-col items-end flex-shrink-0 text-right">
+                    <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
+                      <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
+                    </span>
+                    <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                      <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                      <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+              <!-- Back Header: Title & Badges -->
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                    <i class="fa-solid fa-sparkles text-amber-300"></i>
+                    <span>What Learners Will Gain</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
+                    <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
+                  </span>
+                </div>
+
+                <div class="mt-2">
+                  <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                    Google Data Analytics Program
+                  </h4>
+                  <p class="text-[11px] text-slate-500 font-light mt-0.5">
+                    SQL &amp; BigQuery • Data Visualization • Tableau &amp; Looker
+                  </p>
+                </div>
+                <div class="w-12 h-1 bg-gradient-to-r from-teal-600 to-emerald-600 rounded-full mt-1.5 mb-2.5"></div>
+
+                <!-- 4 Core Key Points (Diagram-Card Style) -->
+                <div class="space-y-1.5">
+                  <!-- Point 1 -->
+                  <div class="p-2 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-xl border border-emerald-100/90 shadow-2xs flex items-center gap-2.5 hover:border-emerald-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-filter text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Data Cleaning &amp; Analysis</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Data exploration, spreadsheet calculations &amp; transformation</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 2 -->
+                  <div class="p-2 bg-gradient-to-r from-teal-50/70 to-slate-50/50 rounded-xl border border-teal-100/90 shadow-2xs flex items-center gap-2.5 hover:border-teal-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-chart-pie text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Dashboards &amp; Visualization</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Create interactive dynamic dashboards with Tableau &amp; Looker</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 3 -->
+                  <div class="p-2 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-xl border border-blue-100/90 shadow-2xs flex items-center gap-2.5 hover:border-blue-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-database text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">SQL Queries &amp; BigQuery</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Extract, join, aggregate and analyze massive cloud datasets</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 4 -->
+                  <div class="p-2 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-xl border border-purple-100/90 shadow-2xs flex items-center gap-2.5 hover:border-purple-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-briefcase text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Portfolio Case Studies</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Real business intelligence projects for career readiness</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Back Summary: Price & Duration -->
+              <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between">
+                <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] font-semibold">
+                  <i class="fa-regular fa-clock text-blue-600 text-xs"></i> 5 Days Intensive
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                  <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Bottom: Course Details & Text -->
-        <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between bg-white text-left gap-4 sm:gap-5 rounded-b-3xl">
-          <div class="flex items-start justify-between gap-2.5 sm:gap-3">
-            <div>
-              <!-- Course Title -->
-              <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                Google Data Analytics Program
-              </h3>
-
-              <!-- Provider & Track Info -->
-              <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
-                Google &amp; InGage EduTech • Data Analytics
-              </p>
-            </div>
-
-            <!-- Duration & Price Rate -->
-            <div class="flex flex-col items-end flex-shrink-0 text-right">
-              <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
-                <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
-              </span>
-              <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
-                <span class="text-[11px] text-slate-400 font-normal line-through">₹3,289.00</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CTA Footer: Enroll Now & View Detail -->
+        <!-- FIXED TWO BUTTONS IN SAME PLACE (Never flips, always static & in same position) -->
+        <div class="card-fixed-buttons relative z-20 p-4 sm:p-6 pt-1 sm:pt-2 pb-4 sm:pb-6 bg-white rounded-b-3xl">
           <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
             <!-- Enroll Now Button (Primary) -->
             <a href="DA_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
@@ -876,143 +1086,156 @@
           </div>
         </div>
 
-        <!-- ========================================================================= -->
-        <!-- Right-Side Hover Popover: Key Points (Data Analytics - Desktop only)       -->
-        <!-- ========================================================================= -->
-        <div class="course-hover-popover hidden md:flex absolute md:inset-auto md:left-[calc(100%+14px)] md:top-0 md:w-[420px] bg-white text-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 shadow-2xl z-50 flex-col">
-          
-          <!-- Left Arrow pointer for desktop (pointing to Card 4) -->
-          <div class="hidden md:block absolute top-9 -left-2.5 w-5 h-5 bg-white border-l-2 border-t-2 border-slate-200/90 rotate-[-45deg] z-10"></div>
-          
-          <!-- Invisible hover bridge -->
-          <div class="hidden md:block absolute -left-5 top-0 bottom-0 w-5 pointer-events-auto"></div>
-
-          <div>
-            <!-- Program Title & Subhead with Badge -->
-            <div>
-              <div class="flex items-center justify-between gap-2">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                  <i class="fa-solid fa-sparkles text-amber-300"></i>
-                  <span>What Learners Will Gain</span>
-                </div>
-                <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
-                  <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
-                </span>
-              </div>
-              
-              <h4 class="text-base font-black text-slate-900 leading-tight mt-2">
-                Google Data Analytics Program
-              </h4>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-                SQL &amp; BigQuery • Data Visualization • Tableau &amp; Looker
-              </p>
-              <div class="w-12 h-1 bg-gradient-to-r from-teal-600 to-emerald-600 rounded-full mt-2"></div>
-            </div>
-
-            <!-- 4 Core Key Points (Diagram-Card Style matching Above Section) -->
-            <div class="space-y-2 mt-3">
-              
-              <!-- Point 1 -->
-              <div class="p-2.5 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-2xl border border-emerald-100/90 shadow-2xs flex items-start gap-3 hover:border-emerald-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-filter text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Data Cleaning &amp; Analysis</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Data exploration, spreadsheet calculations &amp; transformation</p>
-                </div>
-              </div>
-
-              <!-- Point 2 -->
-              <div class="p-2.5 bg-gradient-to-r from-teal-50/70 to-slate-50/50 rounded-2xl border border-teal-100/90 shadow-2xs flex items-start gap-3 hover:border-teal-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-chart-pie text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Dashboards &amp; Visualization</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Create interactive dynamic dashboards with Tableau &amp; Looker</p>
-                </div>
-              </div>
-
-              <!-- Point 3 -->
-              <div class="p-2.5 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-2xl border border-blue-100/90 shadow-2xs flex items-start gap-3 hover:border-blue-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-database text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">SQL Queries &amp; BigQuery</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Extract, join, aggregate and analyze massive cloud datasets</p>
-                </div>
-              </div>
-
-              <!-- Point 4 -->
-              <div class="p-2.5 bg-gradient-to-r from-purple-50/70 to-slate-50/50 rounded-2xl border border-purple-100/90 shadow-2xs flex items-start gap-3 hover:border-purple-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-briefcase text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Portfolio Case Studies</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Real business intelligence projects for career readiness</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
       </article>
 
-      <!-- Card 5: Google Cyber Security Program -->
-      <article class="complimentary-course-card w-full group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card">
-        <!-- Top Course Thumbnail Image (Static) -->
-        <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl">
-          <img src="src/cyber-security-card-bg.jpg" alt="Google Cyber Security Program" class="w-full h-full object-cover object-center" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
-          
-          <!-- Top Left: Google | inGage Brand Pill -->
-          <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
-            <span class="text-xs font-bold drop-shadow">
-              <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
-            </span>
-            <span class="text-slate-400 text-[10px] font-normal">|</span>
-            <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
-          </div>
+      <!-- Card 5: Google Cyber Security Program (Fixed Buttons + 3D Swap Animation) -->
+      <article class="complimentary-course-card w-full course-flip-card group relative bg-white rounded-3xl border border-slate-200/90 shadow-soft flex flex-col cursor-pointer hover:shadow-card hover:border-blue-400 transition-all duration-300" data-purpose="course-card" data-course="cyber-security" id="cyber-security-flip-card">
+        
+        <!-- 3D Swapping Card Body (Image + Details) -->
+        <div class="course-flip-card-body flex-1 relative w-full flex flex-col">
+          <div class="course-flip-inner w-full h-full flex-1">
+            
+            <!-- FRONT FACE -->
+            <div class="course-flip-front bg-white rounded-t-3xl flex flex-col justify-between w-full h-full">
+              <!-- Top Course Thumbnail Image (Static) -->
+              <div class="relative overflow-hidden aspect-[16/10] w-full bg-slate-950 rounded-t-3xl flex-shrink-0">
+                <img src="src/cyber-security-card-bg.jpg" alt="Google Cyber Security Program" class="w-full h-full object-cover object-center" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none"></div>
+                
+                <!-- Top Left: Google | inGage Brand Pill -->
+                <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/20 shadow-sm">
+                  <span class="text-xs font-bold drop-shadow">
+                    <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                  </span>
+                  <span class="text-slate-400 text-[10px] font-normal">|</span>
+                  <span class="text-white text-xs font-bold">in<span class="text-[#8cb93c] font-black">Gage</span></span>
+                </div>
 
-          <!-- Top Right: Complimentary & Award Badges -->
-          <div class="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">
-            <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Complimentary</span>
-            <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md"><i class="fa-solid fa-award"></i></span>
+                <!-- Top Right: Complimentary & Award Badges -->
+                <div class="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5">
+                  <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">Complimentary</span>
+                  <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md"><i class="fa-solid fa-award"></i></span>
+                </div>
+              </div>
+
+              <!-- Middle Details & Text -->
+              <div class="p-4 sm:p-6 pb-2 sm:pb-3 flex-1 flex flex-col justify-start bg-white text-left">
+                <div class="flex items-start justify-between gap-2.5 sm:gap-3">
+                  <div>
+                    <!-- Course Title -->
+                    <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors font-bold">
+                      Google Cyber Security Program
+                    </h3>
+
+                    <!-- Provider & Track Info -->
+                    <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
+                      Google &amp; InGage EduTech • Cyber Security
+                    </p>
+                  </div>
+
+                  <!-- Duration & Price Rate -->
+                  <div class="flex flex-col items-end flex-shrink-0 text-right">
+                    <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
+                      <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
+                    </span>
+                    <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                      <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                      <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+              <!-- Back Header: Title & Badges -->
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-700 to-indigo-800 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                    <i class="fa-solid fa-sparkles text-amber-300"></i>
+                    <span>What Learners Will Gain</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
+                    <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
+                  </span>
+                </div>
+
+                <div class="mt-2">
+                  <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                    Google Cyber Security Program
+                  </h4>
+                  <p class="text-[11px] text-slate-500 font-light mt-0.5">
+                    Threat Detection • SIEM &amp; SOC • Zero-Trust Security
+                  </p>
+                </div>
+                <div class="w-12 h-1 bg-gradient-to-r from-blue-700 to-indigo-800 rounded-full mt-1.5 mb-2.5"></div>
+
+                <!-- 4 Core Key Points (Diagram-Card Style) -->
+                <div class="space-y-1.5">
+                  <!-- Point 1 -->
+                  <div class="p-2 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-xl border border-blue-100/90 shadow-2xs flex items-center gap-2.5 hover:border-blue-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-shield-virus text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Threat Defense &amp; SIEM</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Incident detection, log analysis &amp; security operations (SOC)</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 2 -->
+                  <div class="p-2 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-xl border border-indigo-100/90 shadow-2xs flex items-center gap-2.5 hover:border-indigo-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-network-wired text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Network &amp; Cloud Security</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Zero-Trust architecture, firewalls &amp; secure infrastructure</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 3 -->
+                  <div class="p-2 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-xl border border-amber-100/90 shadow-2xs flex items-center gap-2.5 hover:border-amber-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-bug-slash text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Vulnerability Assessment</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Penetration testing methodologies &amp; mitigation protocols</p>
+                    </div>
+                  </div>
+
+                  <!-- Point 4 -->
+                  <div class="p-2 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-xl border border-emerald-100/90 shadow-2xs flex items-center gap-2.5 hover:border-emerald-300 transition duration-200">
+                    <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <i class="fa-solid fa-file-shield text-[10px]"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h5 class="text-xs font-bold text-slate-900 leading-tight">Compliance &amp; Governance</h5>
+                      <p class="text-[10px] text-slate-600 font-light leading-snug mt-0.5">Industry standards, risk management &amp; enterprise security</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Back Summary: Price & Duration -->
+              <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between">
+                <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] font-semibold">
+                  <i class="fa-regular fa-clock text-blue-600 text-xs"></i> 5 Days Intensive
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
+                  <span class="text-[11px] text-slate-400 font-normal line-through">₹2499</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Bottom: Course Details & Text -->
-        <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between bg-white text-left gap-4 sm:gap-5 rounded-b-3xl">
-          <div class="flex items-start justify-between gap-2.5 sm:gap-3">
-            <div>
-              <!-- Course Title -->
-              <h3 class="course-title-text text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                Google Cyber Security Program
-              </h3>
-
-              <!-- Provider & Track Info -->
-              <p class="course-meta-text text-slate-500 font-medium mt-1 sm:mt-1.5">
-                Google &amp; InGage EduTech • Cyber Security
-              </p>
-            </div>
-
-            <!-- Duration & Price Rate -->
-            <div class="flex flex-col items-end flex-shrink-0 text-right">
-              <span class="inline-flex items-center gap-1 text-slate-600 text-[11px] sm:text-xs font-semibold whitespace-nowrap">
-                <i class="fa-regular fa-clock text-slate-400 text-xs"></i> 5 days
-              </span>
-              <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                <span class="text-sm font-bold text-slate-900 leading-none">₹499</span>
-                <span class="text-[11px] text-slate-400 font-normal line-through">₹3,289.00</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CTA Footer: Enroll Now & View Detail -->
+        <!-- FIXED TWO BUTTONS IN SAME PLACE (Never flips, always static & in same position) -->
+        <div class="card-fixed-buttons relative z-20 p-4 sm:p-6 pt-1 sm:pt-2 pb-4 sm:pb-6 bg-white rounded-b-3xl">
           <div class="pt-2 grid grid-cols-2 gap-2 sm:gap-2.5">
             <!-- Enroll Now Button (Primary) -->
             <a href="CY_Reg/index.html#registration-section" class="py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-1 sm:gap-1.5 transition text-center no-underline">
@@ -1027,90 +1250,6 @@
           </div>
         </div>
 
-        <!-- ========================================================================= -->
-        <!-- Left-Side Hover Popover: Key Points (Cyber Security - Desktop only)        -->
-        <!-- ========================================================================= -->
-        <div class="course-hover-popover popover-left hidden md:flex absolute md:inset-auto md:right-[calc(100%+14px)] md:left-auto md:top-0 md:w-[420px] bg-white text-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 shadow-2xl z-50 flex-col">
-          
-          <!-- Right Arrow pointer for desktop (pointing right to Card 5) -->
-          <div class="hidden md:block absolute top-9 -right-2.5 w-5 h-5 bg-white border-r-2 border-t-2 border-slate-200/90 rotate-[45deg] z-10"></div>
-          
-          <!-- Invisible hover bridge on right side -->
-          <div class="hidden md:block absolute -right-5 top-0 bottom-0 w-5 pointer-events-auto"></div>
-
-          <div>
-            <!-- Program Title & Subhead with Badge -->
-            <div>
-              <div class="flex items-center justify-between gap-2">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-700 to-indigo-800 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                  <i class="fa-solid fa-sparkles text-amber-300"></i>
-                  <span>What Learners Will Gain</span>
-                </div>
-                <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/80">
-                  <i class="fa-solid fa-star text-amber-500 text-[9px]"></i> 4.9 ★
-                </span>
-              </div>
-              
-              <h4 class="text-base font-black text-slate-900 leading-tight mt-2">
-                Google Cyber Security Program
-              </h4>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-                Threat Detection • SIEM &amp; SOC • Zero-Trust Security
-              </p>
-              <div class="w-12 h-1 bg-gradient-to-r from-blue-700 to-indigo-800 rounded-full mt-2"></div>
-            </div>
-
-            <!-- 4 Core Key Points (Diagram-Card Style matching Above Section) -->
-            <div class="space-y-2 mt-3">
-              
-              <!-- Point 1 -->
-              <div class="p-2.5 bg-gradient-to-r from-blue-50/70 to-slate-50/50 rounded-2xl border border-blue-100/90 shadow-2xs flex items-start gap-3 hover:border-blue-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-shield-virus text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Threat Defense &amp; SIEM</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Incident detection, log analysis &amp; security operations (SOC)</p>
-                </div>
-              </div>
-
-              <!-- Point 2 -->
-              <div class="p-2.5 bg-gradient-to-r from-indigo-50/70 to-slate-50/50 rounded-2xl border border-indigo-100/90 shadow-2xs flex items-start gap-3 hover:border-indigo-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-network-wired text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Network &amp; Cloud Security</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Zero-Trust architecture, firewalls &amp; secure infrastructure</p>
-                </div>
-              </div>
-
-              <!-- Point 3 -->
-              <div class="p-2.5 bg-gradient-to-r from-amber-50/70 to-slate-50/50 rounded-2xl border border-amber-100/90 shadow-2xs flex items-start gap-3 hover:border-amber-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-bug-slash text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Vulnerability Assessment</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Penetration testing methodologies &amp; mitigation protocols</p>
-                </div>
-              </div>
-
-              <!-- Point 4 -->
-              <div class="p-2.5 bg-gradient-to-r from-emerald-50/70 to-slate-50/50 rounded-2xl border border-emerald-100/90 shadow-2xs flex items-start gap-3 hover:border-emerald-300 hover:shadow-xs hover:translate-x-0.5 transition duration-200">
-                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
-                  <i class="fa-solid fa-file-shield text-xs"></i>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900 leading-tight">Compliance &amp; Governance</h5>
-                  <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Industry standards, risk management &amp; enterprise security</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
       </article>
 
     </div>
@@ -1188,8 +1327,8 @@
       </p>
     </div>
 
-    <!-- Item 5: Rose Theme Card -->
-    <div class="p-4 sm:p-6 bg-rose-50/70 rounded-2xl border-2 border-rose-200/90 shadow-2xs flex flex-row sm:flex-col items-center text-left sm:text-center gap-3.5 sm:gap-0 hover:shadow-md hover:bg-rose-100/50 hover:border-rose-400 transition-all duration-300">
+    <!-- Item 5: Rose Theme Card (Centered on 2-col tablet) -->
+    <div class="p-4 sm:p-6 bg-rose-50/70 rounded-2xl border-2 border-rose-200/90 shadow-2xs flex flex-row sm:flex-col items-center text-left sm:text-center gap-3.5 sm:gap-0 hover:shadow-md hover:bg-rose-100/50 hover:border-rose-400 transition-all duration-300 sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none w-full">
       <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-rose-600 text-white flex items-center justify-center text-base sm:text-lg mb-0 sm:mb-3.5 flex-shrink-0 shadow-sm">
         <i class="fa-solid fa-briefcase"></i>
       </div>
@@ -1701,7 +1840,7 @@
         <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">One-Time Fee</span>
         <div class="flex items-center gap-1.5">
           <span id="modal-course-price" class="text-lg sm:text-xl font-black text-slate-900 leading-none">₹499</span>
-          <span class="text-xs text-slate-400 line-through font-medium leading-none">₹3,289</span>
+          <span class="text-xs text-slate-400 line-through font-medium leading-none">₹2499</span>
         </div>
       </div>
       

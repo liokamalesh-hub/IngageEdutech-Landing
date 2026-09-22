@@ -217,4 +217,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // Touch / Mobile Flip Support for course cards
+  const flipCards = document.querySelectorAll('.course-flip-card');
+  flipCards.forEach(card => {
+    const cardBody = card.querySelector('.course-flip-card-body');
+    if (!cardBody) return;
+    cardBody.addEventListener('click', (e) => {
+      if (e.target.closest('.card-fixed-buttons')) return;
+      if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) {
+        card.classList.toggle('is-swapped');
+      }
+    });
+  });
 });

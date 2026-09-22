@@ -207,42 +207,22 @@ html, body, button, input, select, textarea {
   font-family: 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif !important;
 }
 
-/* Desktop Typography Scale Upgrades (only applied on large screens >= 1024px) */
+/* Desktop Typography Scale Upgrades (applied on screens >= 1024px, preserving compact badge geometry) */
 @media (min-width: 1024px) {
-  .text-\[8px\] {
-    font-size: 11px !important;
-  }
-  .text-\[9px\] {
-    font-size: 12px !important;
-  }
-  .text-\[10px\] {
-    font-size: 13px !important;
-  }
-  .text-\[11px\] {
-    font-size: 14px !important;
-  }
-  .text-\[12px\] {
-    font-size: 14px !important;
-  }
-
-  .text-xs {
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-  }
   .text-sm {
-    font-size: 16px !important;
-    line-height: 1.6 !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
   }
   .text-base {
-    font-size: 17px !important;
-    line-height: 1.7 !important;
+    font-size: 16.5px !important;
+    line-height: 1.65 !important;
   }
   .text-lg {
-    font-size: 20px !important;
+    font-size: 19px !important;
     line-height: 1.5 !important;
   }
   .text-xl {
-    font-size: 22px !important;
+    font-size: 21px !important;
     line-height: 1.35 !important;
   }
 }
@@ -301,13 +281,21 @@ img, svg, video, canvas, audio, iframe, embed, object {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 16px));
   }
 
-  /* Card Buttons Mobile Optimization */
-  [data-purpose="course-card"] .grid-cols-2 a {
-    font-size: 11px !important;
+  /* Universal touch-friendly tap target accessibility */
+  [data-purpose="course-card"] .grid-cols-2 a,
+  .card-fixed-buttons a,
+  .genai-card-buttons a {
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
     padding: 10px 6px !important;
-    min-height: 42px !important;
+    min-height: 44px !important;
     border-radius: 12px !important;
     white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
   }
 }
 
@@ -334,6 +322,38 @@ img, svg, video, canvas, audio, iframe, embed, object {
   /* Touch scrolling smoothness */
   body {
     -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Diagram Cards Pixel-Perfect Desktop & Tablet Alignment */
+@media (min-width: 768px) {
+  .diagram-card {
+    height: 96px !important;
+    min-height: 96px !important;
+    max-height: 96px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .diagram-card {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+  .diagram-card h3 {
+    font-size: 11.5px !important;
+    line-height: 1.25 !important;
+  }
+  .diagram-card p {
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
+  }
+  .diagram-card .w-10 {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .diagram-card .w-10 i {
+    font-size: 13px !important;
   }
 }
 
@@ -492,12 +512,26 @@ body.modal-open {
   overflow: hidden !important;
 }
 
-/* Complimentary Course Cards: match primary cards width with custom spacing */
-@media (min-width: 768px) {
+/* Complimentary Course Cards: Responsive layout across mobile, tablet, and desktop */
+.complimentary-course-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 100% !important;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .complimentary-course-card {
+    width: calc((100% - 2rem) / 2) !important;
+    max-width: 480px !important;
+    flex: 1 1 calc((100% - 2rem) / 2) !important;
+  }
+}
+
+@media (min-width: 1024px) {
   .complimentary-course-card {
     width: calc((100% - 3rem) / 3) !important;
-    max-width: calc((100% - 3rem) / 3) !important;
-    flex: 0 0 calc((100% - 3rem) / 3) !important;
+    max-width: 440px !important;
+    flex: 0 1 calc((100% - 3rem) / 3) !important;
   }
 }
 
@@ -508,27 +542,6 @@ body.modal-open {
     width: 100% !important;
     max-width: 100vw !important;
     overflow-x: hidden !important;
-  }
-
-  /* Complimentary Course Cards full width on tablet & mobile */
-  .complimentary-course-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: 1 1 100% !important;
-  }
-
-  /* Course Card Button Mobile Polish */
-  [data-purpose="course-card"] .grid-cols-2 a {
-    font-size: 11.5px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.02em !important;
-    padding: 10px 6px !important;
-    min-height: 44px !important;
-    border-radius: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
   }
 
   /* Safe touch height for all buttons and links */
@@ -608,4 +621,102 @@ body.modal-open {
     height: 160px !important;
   }
 }
+
+/* ========================================================================= */
+/* Course Cards - 3D Card Swap Animation (All Cards)                        */
+/* ========================================================================= */
+
+.course-flip-card, #genai-flip-card {
+  min-height: 100%;
+  position: relative;
+}
+
+.course-flip-card-body, .genai-flip-card-body {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  position: relative;
+  z-index: 1;
+  min-height: 350px;
+}
+
+.course-flip-inner, .genai-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 3D Swap on Hover (Desktop) - Only swaps when hovering over the card body, NOT the buttons! */
+@media (hover: hover) {
+  .course-flip-card-body:hover, .genai-flip-card-body:hover {
+    z-index: 10 !important;
+  }
+  .course-flip-card-body:hover .course-flip-inner,
+  .course-flip-card-body:hover .genai-flip-inner,
+  .genai-flip-card-body:hover .course-flip-inner,
+  .genai-flip-card-body:hover .genai-flip-inner {
+    transform: rotateY(180deg);
+  }
+  /* Crucial: Absolutely prevent any swap when cursor is over the buttons */
+  .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
+  .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
+  .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
+  .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+  #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+  #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
+    transform: rotateY(0deg) !important;
+  }
+}
+
+.card-fixed-buttons, .genai-card-buttons {
+  position: relative;
+  z-index: 20 !important;
+}
+
+/* Toggled swap state (Touch devices / click trigger) */
+.course-flip-card.is-swapped .course-flip-inner,
+.course-flip-card.is-flipped .course-flip-inner,
+#genai-flip-card.is-swapped .genai-flip-inner,
+#genai-flip-card.is-flipped .genai-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.course-flip-front, .genai-flip-front,
+.course-flip-back, .genai-flip-back {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.course-flip-front, .genai-flip-front {
+  position: relative;
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.course-flip-back, .genai-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  z-index: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Prevent any popover collision on swap cards */
+.course-flip-card .course-hover-popover,
+#genai-flip-card .course-hover-popover {
+  display: none !important;
+}
+
+
+
+
 

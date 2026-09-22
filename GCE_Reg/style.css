@@ -4525,3 +4525,336 @@ a {
   }
 }
 
+/* ==========================================================================
+   3D Flip / Swap Course Card Animation (Fixed Action Footer)
+   ========================================================================== */
+.free-course-card.course-flip-card {
+  min-height: 445px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
+}
+.free-course-card.course-flip-card:hover {
+  border-color: #3b82f6;
+  box-shadow: var(--shadow-lg);
+}
+.free-course-card.course-flip-card.selected {
+  border-color: #2563eb !important;
+  background-color: #f8fbff !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+}
+.free-course-card.course-flip-card.selected .card-action-btn {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+.course-flip-card-body {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 335px;
+  display: flex;
+  flex-direction: column;
+}
+.course-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .course-flip-card-body:hover {
+    z-index: 10 !important;
+  }
+  .course-flip-card-body:hover .course-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner {
+    transform: rotateY(0deg) !important;
+  }
+}
+.course-flip-card.is-swapped .course-flip-inner,
+.course-flip-card.is-flipped .course-flip-inner {
+  transform: rotateY(180deg);
+}
+.card-fixed-buttons {
+  position: relative;
+  z-index: 20 !important;
+  margin-top: auto;
+  padding: 12px 16px 14px 16px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  border-bottom-left-radius: calc(var(--radius-xl) - 2px);
+  border-bottom-right-radius: calc(var(--radius-xl) - 2px);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+.card-fixed-buttons .card-footer-row {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.card-fixed-buttons .strike-2499 {
+  font-size: 12.5px !important;
+  color: #94a3b8;
+}
+.card-fixed-buttons .free-highlight {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  color: #059669;
+}
+.card-fixed-buttons .card-action-btn {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  padding: 9px 20px !important;
+}
+.free-course-card.selected .card-fixed-buttons {
+  background: #f8fbff !important;
+  border-top-color: rgba(37, 99, 235, 0.15) !important;
+}
+.course-flip-front,
+.course-flip-back {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+.course-flip-front {
+  position: relative;
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 14px 16px;
+  border-top-left-radius: calc(var(--radius-xl) - 2px);
+  border-top-right-radius: calc(var(--radius-xl) - 2px);
+  height: 100%;
+  justify-content: flex-start;
+}
+.course-flip-front .card-img-banner {
+  margin-bottom: 12px;
+}
+.course-flip-front .card-bonus-badge {
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  padding: 4px 10px !important;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+.course-flip-front .card-title {
+  font-size: 17.5px !important;
+  font-weight: 800 !important;
+  color: #0f172a;
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+.course-flip-front .card-desc {
+  font-size: 13.5px !important;
+  line-height: 1.5 !important;
+  color: #64748b;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.course-flip-front .card-hover-hint,
+.card-hover-hint {
+  display: none !important;
+}
+.course-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  z-index: 1;
+  background: #ffffff;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-top-left-radius: calc(var(--radius-xl) - 2px) !important;
+  border-top-right-radius: calc(var(--radius-xl) - 2px) !important;
+  padding: 14px 16px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  text-align: left;
+  transition: background-color var(--transition-base);
+}
+.free-course-card.selected .course-flip-back {
+  background: #f8fbff !important;
+}
+.popup-top-glow-blue,
+.popup-top-glow-purple,
+.popup-top-glow-cyan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 10;
+  pointer-events: none;
+  border-top-left-radius: calc(var(--radius-xl) - 2px);
+  border-top-right-radius: calc(var(--radius-xl) - 2px);
+}
+.popup-top-glow-blue {
+  background: linear-gradient(90deg, #2563eb, #06b6d4, #10b981) !important;
+}
+.popup-top-glow-purple {
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899) !important;
+}
+.popup-top-glow-cyan {
+  background: linear-gradient(90deg, #0284c7, #06b6d4, #2563eb) !important;
+}
+.popup-tag-cyan,
+.popup-tag-purple {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.flip-back-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #f1f5f9;
+  position: relative;
+  z-index: 2;
+}
+.free-course-card.selected .flip-back-header {
+  border-bottom-color: rgba(37, 99, 235, 0.15) !important;
+}
+.flip-back-heading {
+  font-size: 17.5px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 3px 0 0 0;
+}
+.flip-back-price-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.flip-strike-price {
+  font-size: 12px;
+  color: #94a3b8;
+  text-decoration: line-through;
+  line-height: 1;
+}
+.flip-free-price {
+  font-size: 13.5px;
+  font-weight: 900;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 3px 9px;
+  border-radius: 5px;
+  border: 1px solid #a7f3d0;
+  margin-top: 3px;
+}
+.flip-back-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 7px 0;
+}
+.flip-stat-item {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+.flip-stat-icon {
+  font-size: 15px;
+}
+.free-course-card.selected .flip-stat-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+.flip-back-learn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 5px 0;
+  flex: 1;
+  justify-content: space-around;
+}
+.flip-learn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: #334155;
+  background: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+}
+.flip-learn-item strong {
+  font-weight: 800;
+  color: #0f172a;
+}
+.free-course-card.selected .flip-learn-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(37, 99, 235, 0.15);
+}
+.flip-learn-emoji {
+  font-size: 16px;
+  line-height: 1.1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.flip-back-footer-prompt {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px dashed rgba(37, 99, 235, 0.4);
+  margin-top: 5px;
+}
+.free-course-card.selected .flip-back-footer-prompt {
+  background: rgba(239, 246, 255, 0.95);
+  border-color: #2563eb;
+}
+.free-course-card .da-popup {
+  display: none !important;
+}
+
