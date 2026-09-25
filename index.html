@@ -117,17 +117,29 @@
     }
   }
 
-  /* Mobile Responsive (<= 768px): Flip Effect Completely Removed */
+  /* Mobile Responsive (<= 768px): Flip Effect Completely Removed & Natural Flow */
   @media (max-width: 768px) {
     .course-flip-card, #genai-flip-card {
       cursor: default !important;
+      min-height: auto !important;
+      height: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
     .course-flip-card-body, .genai-flip-card-body {
       perspective: none !important;
       -webkit-perspective: none !important;
       min-height: auto !important;
+      height: auto !important;
       position: relative !important;
       z-index: 1 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      flex: 1 1 auto !important;
     }
     .course-flip-inner, .genai-flip-inner {
       transform: none !important;
@@ -136,6 +148,13 @@
       -webkit-transform-style: flat !important;
       transition: none !important;
       will-change: auto !important;
+      height: auto !important;
+      min-height: auto !important;
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      flex: 1 1 auto !important;
     }
     .course-flip-card:hover .course-flip-inner,
     .course-flip-card-body:hover .course-flip-inner,
@@ -157,8 +176,11 @@
       -webkit-backface-visibility: visible !important;
       width: 100% !important;
       height: auto !important;
+      min-height: auto !important;
       display: flex !important;
+      flex-direction: column !important;
       opacity: 1 !important;
+      visibility: visible !important;
     }
     .course-flip-back, .genai-flip-back {
       display: none !important;
@@ -986,7 +1008,7 @@
     </div>
 
     <!-- Header row -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pl-8 sm:pl-12">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pl-10 sm:pl-12">
       <div>
         <h2 class="font-sf text-xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug" style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'San Francisco', sans-serif;">
           Special Complimentary Course Choice

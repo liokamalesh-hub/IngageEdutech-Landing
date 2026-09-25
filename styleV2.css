@@ -718,15 +718,29 @@ body.modal-open {
   }
 }
 
-/* Mobile Responsive (<= 768px): Card Flip Disabled */
+/* Mobile Responsive (<= 768px): Card Flip Disabled & Natural Flow */
 @media (max-width: 768px) {
   .course-flip-card, #genai-flip-card {
     cursor: default !important;
+    min-height: auto !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
   .course-flip-card-body, .genai-flip-card-body {
     perspective: none !important;
     -webkit-perspective: none !important;
     min-height: auto !important;
+    height: auto !important;
+    position: relative !important;
+    z-index: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
   }
   .course-flip-inner, .genai-flip-inner {
     transform: none !important;
@@ -735,6 +749,13 @@ body.modal-open {
     -webkit-transform-style: flat !important;
     transition: none !important;
     will-change: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
   }
   .course-flip-card:hover .course-flip-inner,
   .course-flip-card-body:hover .course-flip-inner,
@@ -756,7 +777,11 @@ body.modal-open {
     -webkit-backface-visibility: visible !important;
     width: 100% !important;
     height: auto !important;
+    min-height: auto !important;
     display: flex !important;
+    flex-direction: column !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   .course-flip-back, .genai-flip-back {
     display: none !important;
@@ -891,6 +916,43 @@ table {
   .btn-hero-primary {
     width: 100% !important;
     font-size: 14px !important;
+  }
+}
+
+/* ---- Ultra-Compact Mobile: ≤360px & 320px ---- */
+@media (max-width: 360px) {
+  section {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .card-fixed-buttons,
+  .genai-card-buttons {
+    padding: 10px 8px !important;
+  }
+  .card-fixed-buttons a,
+  .genai-card-buttons a,
+  [data-purpose="course-card"] .grid-cols-2 a {
+    font-size: 10.5px !important;
+    padding: 8px 3px !important;
+    gap: 2px !important;
+    min-height: 40px !important;
+  }
+  .course-title-text {
+    font-size: 14.5px !important;
+  }
+  .course-meta-text {
+    font-size: 11px !important;
+  }
+  .course-price-main {
+    font-size: 18px !important;
+  }
+  #hub-node {
+    width: 84px !important;
+    height: 84px !important;
+  }
+  #hub-node svg {
+    width: 24px !important;
+    height: 24px !important;
   }
 }
 
