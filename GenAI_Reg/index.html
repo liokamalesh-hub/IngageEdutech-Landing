@@ -22,7 +22,17 @@
 
   <!-- 3D Flip Card Styles for Complimentary Courses -->
   <style>
+    .free-course-cards-grid {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 40px;
+      width: 100%;
+    }
     .free-course-card.course-flip-card {
+      flex: 1 1 0;
+      width: 100%;
+      max-width: 445px;
       min-height: 445px;
       position: relative;
       display: flex;
@@ -30,7 +40,7 @@
       justify-content: space-between;
       padding: 0 !important;
       overflow: hidden;
-      border-radius: var(--radius-xl);
+      border-radius: 16px;
       background-color: #ffffff;
       border: 2px solid #e2e8f0;
       transition: border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
@@ -201,11 +211,21 @@
     .free-course-card.selected .course-flip-back {
       background: #f8fbff !important;
     }
-    /* Mobile Responsive (<= 768px): Card Flip Disabled on Mobile */
+    /* Mobile Responsive (<= 768px): Card Flip Disabled & Adaptive Mobile Card Sizing */
     @media (max-width: 768px) {
+      .free-course-cards-grid {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
       .free-course-card.course-flip-card {
+        width: 100% !important;
+        max-width: 100% !important;
         min-height: auto !important;
         cursor: default !important;
+        margin: 0 auto !important;
       }
       .course-flip-card-body {
         perspective: none !important;
