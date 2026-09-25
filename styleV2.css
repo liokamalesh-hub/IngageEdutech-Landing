@@ -631,83 +631,9 @@ body.modal-open {
   position: relative;
 }
 
-.course-flip-card-body, .genai-flip-card-body {
-  perspective: 1200px;
-  -webkit-perspective: 1200px;
-  position: relative;
-  z-index: 1;
-  min-height: 350px;
-}
-
-.course-flip-inner, .genai-flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* 3D Swap on Hover (Desktop) - Only swaps when hovering over the card body, NOT the buttons! */
-@media (hover: hover) {
-  .course-flip-card-body:hover, .genai-flip-card-body:hover {
-    z-index: 10 !important;
-  }
-  .course-flip-card-body:hover .course-flip-inner,
-  .course-flip-card-body:hover .genai-flip-inner,
-  .genai-flip-card-body:hover .course-flip-inner,
-  .genai-flip-card-body:hover .genai-flip-inner {
-    transform: rotateY(180deg);
-  }
-  /* Crucial: Absolutely prevent any swap when cursor is over the buttons */
-  .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
-  .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
-  .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
-  .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
-  #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
-  #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
-    transform: rotateY(0deg) !important;
-  }
-}
-
 .card-fixed-buttons, .genai-card-buttons {
   position: relative;
   z-index: 20 !important;
-}
-
-/* Toggled swap state (Touch devices / click trigger) */
-.course-flip-card.is-swapped .course-flip-inner,
-.course-flip-card.is-flipped .course-flip-inner,
-#genai-flip-card.is-swapped .genai-flip-inner,
-#genai-flip-card.is-flipped .genai-flip-inner {
-  transform: rotateY(180deg);
-}
-
-.course-flip-front, .genai-flip-front,
-.course-flip-back, .genai-flip-back {
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-sizing: border-box;
-}
-
-.course-flip-front, .genai-flip-front {
-  position: relative;
-  transform: rotateY(0deg);
-  -webkit-transform: rotateY(0deg);
-  z-index: 2;
-}
-
-.course-flip-back, .genai-flip-back {
-  position: absolute;
-  inset: 0;
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  z-index: 1;
-  overflow-y: auto;
-  scrollbar-width: thin;
 }
 
 /* Prevent any popover collision on swap cards */
@@ -716,7 +642,278 @@ body.modal-open {
   display: none !important;
 }
 
+/* Desktop & Laptop (screen width >= 769px): 3D Flip Effect Enabled */
+@media (min-width: 769px) {
+  .course-flip-card-body, .genai-flip-card-body {
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
+    position: relative;
+    z-index: 1;
+    min-height: 350px;
+  }
 
+  .course-flip-inner, .genai-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+  }
 
+  @media (hover: hover) {
+    .course-flip-card-body:hover, .genai-flip-card-body:hover {
+      z-index: 10 !important;
+    }
+    .course-flip-card-body:hover .course-flip-inner,
+    .course-flip-card-body:hover .genai-flip-inner,
+    .genai-flip-card-body:hover .course-flip-inner,
+    .genai-flip-card-body:hover .genai-flip-inner {
+      transform: rotateY(180deg);
+    }
+    /* Absolutely prevent any swap when cursor is over the buttons */
+    .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
+    .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
+    .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
+    .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+    #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+    #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
+      transform: rotateY(0deg) !important;
+    }
+  }
+
+  /* Toggled swap state on desktop/laptop */
+  .course-flip-card.is-swapped .course-flip-inner,
+  .course-flip-card.is-flipped .course-flip-inner,
+  #genai-flip-card.is-swapped .genai-flip-inner,
+  #genai-flip-card.is-flipped .genai-flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .course-flip-front, .genai-flip-front,
+  .course-flip-back, .genai-flip-back {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+  }
+
+  .course-flip-front, .genai-flip-front {
+    position: relative;
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+    z-index: 2;
+  }
+
+  .course-flip-back, .genai-flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    z-index: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+/* Mobile Responsive (<= 768px): Card Flip Disabled */
+@media (max-width: 768px) {
+  .course-flip-card, #genai-flip-card {
+    cursor: default !important;
+  }
+  .course-flip-card-body, .genai-flip-card-body {
+    perspective: none !important;
+    -webkit-perspective: none !important;
+    min-height: auto !important;
+  }
+  .course-flip-inner, .genai-flip-inner {
+    transform: none !important;
+    -webkit-transform: none !important;
+    transform-style: flat !important;
+    -webkit-transform-style: flat !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+  .course-flip-card:hover .course-flip-inner,
+  .course-flip-card-body:hover .course-flip-inner,
+  .course-flip-card-body:hover .genai-flip-inner,
+  .genai-flip-card-body:hover .course-flip-inner,
+  .genai-flip-card-body:hover .genai-flip-inner,
+  .course-flip-card.is-swapped .course-flip-inner,
+  .course-flip-card.is-flipped .course-flip-inner,
+  #genai-flip-card.is-swapped .genai-flip-inner,
+  #genai-flip-card.is-flipped .genai-flip-inner {
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  .course-flip-front, .genai-flip-front {
+    position: relative !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+  }
+  .course-flip-back, .genai-flip-back {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Collaborative Learning Community Banner - Smooth Smoke Edge Fade */
+.community-banner-card {
+  background-color: #1e3a8a !important;
+}
+@media (min-width: 768px) {
+  .community-banner-img {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 5%, rgba(0, 0, 0, 0.85) 12%, black 18%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 5%, rgba(0, 0, 0, 0.85) 12%, black 18%);
+  }
+  .community-banner-fade {
+    background: linear-gradient(to right, #1e3a8a 0%, rgba(30, 58, 138, 0.8) 4%, rgba(30, 58, 138, 0.3) 10%, transparent 18%);
+  }
+}
+@media (max-width: 767px) {
+  .community-banner-img {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 4%, black 14%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 4%, black 14%);
+  }
+  .community-banner-fade {
+    background: linear-gradient(to bottom, #1e3a8a 0%, rgba(30, 58, 138, 0.6) 4%, transparent 14%);
+  }
+}
+
+/* ========================================================================= */
+/* Comprehensive Responsive Enhancements (Mobile, Tablet & Laptop)          */
+/* ========================================================================= */
+
+/* Global overflow protection at ALL viewports */
+html {
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure images and media never overflow their containers */
+img, video, iframe, svg, canvas, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tables overflow safety */
+table {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Word-break safety for long text on small screens */
+@media (max-width: 640px) {
+  h1, h2, h3, h4, h5, h6, p, span, a, li, td, th {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* ---- Laptop Breakpoint: 1024px – 1279px ---- */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* Slightly tighter section padding on narrow laptops */
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Registration process step cards: smaller gap for 5-col grid */
+  .hidden.sm\:grid {
+    gap: 8px !important;
+  }
+
+  /* Cert step cards: slightly smaller image height */
+  .cert-step-img-wrap {
+    height: 180px !important;
+  }
+}
+
+/* ---- Tablet Breakpoint: 768px – 1023px ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Ensure comfortable padding */
+  section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  /* Course flip cards: ensure adequate min-height */
+  .course-flip-card-body, .genai-flip-card-body {
+    min-height: 300px;
+  }
+
+  /* Modal: full width with margins */
+  #course-modal > div:last-child {
+    max-width: 92vw;
+    max-height: 88vh;
+  }
+}
+
+/* ---- Small Mobile: ≤375px (iPhone SE, Galaxy S series) ---- */
+@media (max-width: 375px) {
+  /* Prevent text clipping on very narrow screens */
+  section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* Hero title size */
+  h1 {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Hub node for branch diagram */
+  #hub-node {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  #hub-node svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  /* Ensure buttons are full width */
+  .btn-hero-primary {
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ---- Safe viewport for iOS notch / Android punch-hole ---- */
+@supports (padding: env(safe-area-inset-left)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* ---- Print-friendly: prevent layout breaks ---- */
+@media print {
+  .course-flip-card-body, .genai-flip-card-body {
+    perspective: none !important;
+  }
+  .course-flip-inner, .genai-flip-inner {
+    transform: none !important;
+    transform-style: flat !important;
+  }
+  .course-flip-back, .genai-flip-back {
+    display: none !important;
+  }
+}
 
 

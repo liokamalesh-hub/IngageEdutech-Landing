@@ -481,7 +481,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initGenAIFlipCard();
 });
 
-// Initialize 3D Swap Card for All Course Cards
+// Initialize 3D Swap Card for All Course Cards (Laptop and Desktop)
 function initGenAIFlipCard() {
   const flipCards = document.querySelectorAll('.course-flip-card, #genai-flip-card');
   if (!flipCards.length) return;
@@ -492,6 +492,7 @@ function initGenAIFlipCard() {
     const flipBadgeTrigger = flipCard.querySelector('.flip-badge-trigger');
     if (flipBadgeTrigger) {
       flipBadgeTrigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) return;
         e.preventDefault();
         e.stopPropagation();
         flipCard.classList.toggle('is-flipped');
@@ -501,17 +502,19 @@ function initGenAIFlipCard() {
     const flipBackTrigger = flipCard.querySelector('.flip-back-trigger');
     if (flipBackTrigger) {
       flipBackTrigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) return;
         e.preventDefault();
         e.stopPropagation();
         flipCard.classList.remove('is-flipped');
       });
     }
 
-    // Support tap-to-flip on touch/mobile devices on the card body only
+    // Support tap-to-flip on touch laptops/tablets on the card body only (min-width > 768px)
     if (isTouch) {
       const cardBody = flipCard.querySelector('.course-flip-card-body, .genai-flip-card-body');
       if (cardBody) {
         cardBody.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768) return;
           if (e.target.closest('a') || e.target.closest('button')) return;
           flipCard.classList.toggle('is-flipped');
         });
@@ -520,4 +523,15 @@ function initGenAIFlipCard() {
   });
 }
 
-
+// Redraw SVG diagram connections on window resize (debounced)
+(function() {
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (typeof drawDiagramConnections === 'function') {
+        drawDiagramConnections();
+      }
+    }, 150);
+  });
+})();

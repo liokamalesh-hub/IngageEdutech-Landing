@@ -94,7 +94,7 @@ function selectCourse(courseId) {
   }
 
   // Show user notification toast
-  showToast(`Added: ${courseNames[courseId]} (100% Free Bonus)`);
+  showToast(`Added: ${courseNames[courseId]} (Complimentary Course)`);
 }
 
 /**
@@ -206,14 +206,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Touch / Mobile Flip Support for course cards
+  // Touch / Mobile Flip Support for course cards (Desktop/Tablet only)
   const flipCards = document.querySelectorAll('.course-flip-card');
   flipCards.forEach(card => {
     const cardBody = card.querySelector('.course-flip-card-body');
     if (!cardBody) return;
     cardBody.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) return;
       if (e.target.closest('.card-fixed-buttons')) return;
-      if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) {
+      if (window.matchMedia('(pointer: coarse)').matches) {
         card.classList.toggle('is-swapped');
       }
     });

@@ -14,10 +14,13 @@
   <!-- Apple San Francisco (SF Pro Display) Web Font -->
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
 
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <!-- Pure Vanilla CSS3 Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- 3D Flip Card Styles for Free Bonus Courses -->
+  <!-- 3D Flip Card Styles for Complimentary Courses -->
   <style>
     .free-course-card.course-flip-card {
       min-height: 445px;
@@ -184,13 +187,61 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow-y: auto;
-      scrollbar-width: thin;
+      overflow: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       text-align: left;
       transition: background-color var(--transition-base);
     }
+    .course-flip-back::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
     .free-course-card.selected .course-flip-back {
       background: #f8fbff !important;
+    }
+    /* Mobile Responsive (<= 768px): Card Flip Disabled on Mobile */
+    @media (max-width: 768px) {
+      .free-course-card.course-flip-card {
+        min-height: auto !important;
+        cursor: default !important;
+      }
+      .course-flip-card-body {
+        perspective: none !important;
+        -webkit-perspective: none !important;
+        min-height: auto !important;
+      }
+      .course-flip-inner {
+        transform: none !important;
+        -webkit-transform: none !important;
+        transform-style: flat !important;
+        -webkit-transform-style: flat !important;
+        transition: none !important;
+        will-change: auto !important;
+      }
+      .course-flip-card-body:hover .course-flip-inner,
+      .course-flip-card.is-swapped .course-flip-inner,
+      .course-flip-card.is-flipped .course-flip-inner {
+        transform: none !important;
+        -webkit-transform: none !important;
+      }
+      .course-flip-front {
+        position: relative !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        backface-visibility: visible !important;
+        -webkit-backface-visibility: visible !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+      }
+      .course-flip-back {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
     }
     .popup-top-glow-blue,
     .popup-top-glow-purple,
@@ -473,10 +524,6 @@
                 Program Specifications
               </h3>
             </div>
-            <span class="certified-pill">
-              <span class="certified-dot"></span>
-              Official Certified
-            </span>
           </div>
 
           <!-- 3-Column Specifications Grid -->
@@ -633,10 +680,6 @@
 
             <!-- Trust Seals Ribbon -->
             <div class="reg-trust-ribbon">
-              <div class="trust-badge-emerald">
-                <span>⚡</span>
-                <span>Instant Confirmation</span>
-              </div>
               <div class="trust-badge-purple">
                 <span>🎁</span>
                 <span>1+1 Special Offer Active</span>
@@ -754,7 +797,7 @@
                 </div>
 
                 <h3 class="pass-heading">
-                  OFFICIAL PROGRAM FEE &amp; ENROLLMENT PASS
+                  PROGRAM FEE
                 </h3>
 
                 <!-- Pricing Display -->
@@ -767,7 +810,7 @@
                   <span class="fee-slash">/</span>
 
                   <div class="student-fee-col">
-                    <span class="student-label">Student Offer</span>
+                    <span class="student-label">SPECIAL OFFER</span>
                     <span class="student-fee-number">₹499</span>
                   </div>
 
@@ -789,10 +832,10 @@
                   </span>
                 </div>
 
-                <!-- Bridge to Free Bonus Selection -->
+                <!-- Bridge to Complimentary Course Selection -->
                 <div class="pass-bridge-note">
                   <span>🎁 <span class="bonus-unlocked-tag">SPECIAL BONUS UNLOCKED:</span> Choose your 2nd Google
-                    Program <span class="bonus-free-underline">100% FREE</span> below:</span>
+                    Program as <span class="bonus-free-underline">complimentary add ons</span> below</span>
                 </div>
               </div>
 
@@ -803,7 +846,7 @@
                     <div class="free-course-title-group">
                       <label class="free-course-label" for="free-course">Select Your Free Course</label>
                       <span class="bonus-pill-tag">
-                        <span>🎁</span> 100% Free Bonus
+                        <span>🎁</span> Complimentary Course
                       </span>
                     </div>
                     <p class="free-course-subtitle">Choose your complimentary Google program under the Special Limited
@@ -835,7 +878,7 @@
                           <div class="card-img-banner">
                             <img src="../src/data-analytics-card-bg.jpg" alt="Google Data Analytics Program" loading="lazy" />
                           </div>
-                          <div class="card-bonus-badge">★ Free Bonus</div>
+                          <div class="card-bonus-badge">★ Complimentary Course</div>
                           <h4 class="card-title">Google Data Analytics Program</h4>
                           <p class="card-desc">Data Cleaning, Analysis, Visualization &amp; Problem Solving</p>
                         </div>
@@ -845,12 +888,8 @@
                           <div class="popup-top-glow-blue"></div>
                           <div class="flip-back-header">
                             <div>
-                              <div class="popup-tag-cyan">★ Free Bonus Program</div>
+                              <div class="popup-tag-cyan">★ Complimentary Course</div>
                               <h4 class="flip-back-heading">Google Data Analytics Program</h4>
-                            </div>
-                            <div class="flip-back-price-pill">
-                              <span class="flip-strike-price">₹2499</span>
-                              <span class="flip-free-price">100% FREE</span>
                             </div>
                           </div>
 
@@ -889,9 +928,6 @@
                             </div>
                           </div>
 
-                          <div class="flip-back-footer-prompt">
-                            <span>👆 Click card to choose this free bonus</span>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -901,7 +937,7 @@
                       <div class="card-footer-row">
                         <div>
                           <span class="strike-2499">₹2499</span>
-                          <span class="free-highlight">FREE</span>
+                          <span class="free-highlight">BONUS</span>
                         </div>
                         <button class="card-action-btn action-btn" type="button">Select Course</button>
                       </div>
@@ -919,7 +955,7 @@
                           <div class="card-img-banner">
                             <img src="../src/cyber-security-card-bg.jpg" alt="Google Cyber Security Program" loading="lazy" />
                           </div>
-                          <div class="card-bonus-badge">★ Free Bonus</div>
+                          <div class="card-bonus-badge">★ Complimentary Course</div>
                           <h4 class="card-title">Google Cyber Security Program</h4>
                           <p class="card-desc">Threat Analysis, SIEM Tools, Network Security &amp; Response</p>
                         </div>
@@ -929,12 +965,8 @@
                           <div class="popup-top-glow-purple"></div>
                           <div class="flip-back-header">
                             <div>
-                              <div class="popup-tag-purple">★ Free Bonus Program</div>
+                              <div class="popup-tag-purple">★ Complimentary Course</div>
                               <h4 class="flip-back-heading">Google Cyber Security Program</h4>
-                            </div>
-                            <div class="flip-back-price-pill">
-                              <span class="flip-strike-price">₹2499</span>
-                              <span class="flip-free-price">100% FREE</span>
                             </div>
                           </div>
 
@@ -973,9 +1005,6 @@
                             </div>
                           </div>
 
-                          <div class="flip-back-footer-prompt" style="color: #7e22ce; background: #faf5ff; border-color: rgba(126, 34, 206, 0.4);">
-                            <span>👆 Click card to choose this free bonus</span>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -985,7 +1014,7 @@
                       <div class="card-footer-row">
                         <div>
                           <span class="strike-2499">₹2499</span>
-                          <span class="free-highlight">FREE</span>
+                          <span class="free-highlight">BONUS</span>
                         </div>
                         <button class="card-action-btn action-btn" type="button">Select Course</button>
                       </div>
@@ -998,7 +1027,7 @@
                 <div class="selected-confirmation-pill hidden" id="selected-confirmation-pill">
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="confirm-check-badge">✓</span>
-                    <span>Selected Free Bonus: <strong id="selected-course-title"
+                    <span>Selected Complimentary Course: <strong id="selected-course-title"
                         style="font-weight: 900; font-size: 13px;">None</strong></span>
                   </div>
                 </div>
@@ -1034,7 +1063,7 @@
             </div>
 
             <p class="reg-privacy-note">
-              🔒 Instant confirmation generated upon completing payment of ₹499. Your data is securely processed.
+              🔒 Your data is securely processed.
             </p>
           </form>
         </div>
@@ -1234,7 +1263,6 @@
               <div class="good-news-pill">
                 <span>📢</span>
                 <span>GOOD NEWS!</span>
-                <span class="good-news-tag">EXCLUSIVE OPPORTUNITY</span>
               </div>
 
               <h2 class="cert-banner-heading font-san-francisco">
@@ -1262,24 +1290,43 @@
               </div>
             </div>
 
-            <!-- Gold Prestige Seal -->
+            <!-- Official Global Certification Feature Card -->
             <div class="cert-seal-card">
-              <div class="cert-seal-inner">
-                <div class="seal-trophy-box">
-                  <svg fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z">
-                    </path>
-                  </svg>
+              <div class="cert-card-inner">
+                
+                <!-- Left Side: Badge + Google Logo -->
+                <div class="cert-card-left">
+                  <!-- Top Industry Recognized Badge -->
+                  <span class="cert-industry-badge">
+                    <svg width="12" height="12" viewBox="0 0 576 512" fill="#78350f" style="display:inline-block; vertical-align:middle;"><path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.3 7.6 27 19 34L209.7 220.6 119.1 94.3C124.6 86 128 76 128 65c0-27.6-22.4-50-50-50S28 37.4 28 65c0 13.9 5.7 26.5 14.9 35.6L120.3 352H455.7l77.4-251.4C542.3 91.5 548 78.9 548 65c0-27.6-22.4-50-50-50s-50 22.4-50 50c0 11 3.4 21 8.9 29.3L366.3 220.6 309 106zM64 400c0 26.5 21.5 48 48 48H464c26.5 0 48-21.5 48-48s-21.5-48-48-48H112c-26.5 0-48 21.5-48 48z"/></svg>
+                    INDUSTRY-RECOGNIZED
+                  </span>
+
+                  <!-- Official Google Logo Box -->
+                  <div class="cert-google-box">
+                    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" onerror="this.onerror=null; this.parentElement.innerHTML='<span style=\'font-size:22px; font-weight:bold; letter-spacing:-0.03em; user-select:none;\'><span style=\'color:#4285F4;\'>G</span><span style=\'color:#EA4335;\'>o</span><span style=\'color:#FBBC05;\'>o</span><span style=\'color:#4285F4;\'>g</span><span style=\'color:#34A853;\'>l</span><span style=\'color:#EA4335;\'>e</span></span>';" />
+                  </div>
                 </div>
-                <div class="seal-tag">
-                  <span>★</span> Industry Recognized <span>★</span>
+
+                <!-- Vertical Divider on sm+ -->
+                <div class="cert-card-divider"></div>
+
+                <!-- Right Side: Certification Text & Official Partner -->
+                <div class="cert-card-right">
+                  <h3 class="cert-card-title">
+                    GLOBAL CERTIFICATION
+                  </h3>
+                  <p class="cert-card-tagline">
+                    RECOGNIZED. RESPECTED.<br/>
+                    WORLDWIDE.
+                  </p>
+
+                  <div class="cert-card-partner">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#059669" style="display:inline-block; vertical-align:middle;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>Official Partner</span>
+                  </div>
                 </div>
-                <div class="seal-global-text">GLOBAL</div>
-                <div class="seal-cert-sub">Certification</div>
-                <div class="seal-divider">
-                  <span style="color: #f59e0b;">★</span> Google Skills Boost <span style="color: #f59e0b;">★</span>
-                </div>
+
               </div>
             </div>
           </div>
@@ -1372,11 +1419,7 @@
     <footer class="site-footer" data-purpose="page-footer">
       <div class="content-container">
         <div class="footer-center">
-          <div class="footer-logo-row">
-            <img src="../src/ingage-logo-white.png" alt="inGage Technologies" class="footer-logo-img" />
-            <span>Technologies • info@ingagetech.com</span>
-          </div>
-          <div>© 2025 inGage Technologies. All rights reserved.</div>
+          <div>Copyright © 2026 InGage. All Rights Reserved.</div>
         </div>
       </div>
     </footer>
@@ -1391,7 +1434,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <div>
-          <div class="modal-badge-top">★ SPECIAL LIMITED OFFER - 100% FREE BONUS ★</div>
+          <div class="modal-badge-top">★ SPECIAL LIMITED OFFER - COMPLIMENTARY COURSE ★</div>
           <h3 class="modal-title">Choose Your Complimentary Google Program</h3>
           <p class="modal-subtext">Select one high-demand program included at ₹0 with your Generative AI enrollment.</p>
         </div>
@@ -1499,5 +1542,7 @@
   <!-- Pure Vanilla JavaScript File -->
   <script src="script.js"></script>
 </body>
+
+</html>
 
 </html>

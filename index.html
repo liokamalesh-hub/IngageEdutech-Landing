@@ -34,83 +34,160 @@
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   }
 
-  /* 3D Swap Rules for All Course Cards - Buttons never swap */
+  /* Base Card Rules */
   .course-flip-card, #genai-flip-card {
     min-height: 100%;
     position: relative;
-  }
-  .course-flip-card-body, .genai-flip-card-body {
-    perspective: 1200px;
-    -webkit-perspective: 1200px;
-    position: relative;
-    z-index: 1;
-    min-height: 350px;
-  }
-  .course-flip-inner, .genai-flip-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    will-change: transform;
-  }
-  @media (hover: hover) {
-    .course-flip-card-body:hover, .genai-flip-card-body:hover {
-      z-index: 10 !important;
-    }
-    .course-flip-card-body:hover .course-flip-inner,
-    .course-flip-card-body:hover .genai-flip-inner,
-    .genai-flip-card-body:hover .course-flip-inner,
-    .genai-flip-card-body:hover .genai-flip-inner {
-      transform: rotateY(180deg);
-    }
-    /* Absolutely prevent any swap when cursor is over the buttons */
-    .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
-    .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
-    .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
-    .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
-    #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
-    #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
-      transform: rotateY(0deg) !important;
-    }
-  }
-  .course-flip-card.is-swapped .course-flip-inner,
-  .course-flip-card.is-flipped .course-flip-inner,
-  #genai-flip-card.is-swapped .genai-flip-inner,
-  #genai-flip-card.is-flipped .genai-flip-inner {
-    transform: rotateY(180deg);
   }
   .card-fixed-buttons, .genai-card-buttons {
     position: relative;
     z-index: 20;
   }
-  .course-flip-front, .genai-flip-front,
-  .course-flip-back, .genai-flip-back {
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    box-sizing: border-box;
-  }
-  .course-flip-front, .genai-flip-front {
-    position: relative;
-    transform: rotateY(0deg);
-    -webkit-transform: rotateY(0deg);
-    z-index: 2;
-  }
-  .course-flip-back, .genai-flip-back {
-    position: absolute;
-    inset: 0;
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    z-index: 1;
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
   .course-flip-card .course-hover-popover,
   #genai-flip-card .course-hover-popover {
     display: none !important;
+  }
+
+  /* Desktop & Laptop (screen width >= 769px): Smooth 3D Flip Effect */
+  @media (min-width: 769px) {
+    .course-flip-card-body, .genai-flip-card-body {
+      perspective: 1200px;
+      -webkit-perspective: 1200px;
+      position: relative;
+      z-index: 1;
+      min-height: 350px;
+    }
+    .course-flip-inner, .genai-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      will-change: transform;
+    }
+    @media (hover: hover) {
+      .course-flip-card-body:hover, .genai-flip-card-body:hover {
+        z-index: 10 !important;
+      }
+      .course-flip-card-body:hover .course-flip-inner,
+      .course-flip-card-body:hover .genai-flip-inner,
+      .genai-flip-card-body:hover .course-flip-inner,
+      .genai-flip-card-body:hover .genai-flip-inner {
+        transform: rotateY(180deg);
+      }
+      /* Prevent swap when hover is directly on the fixed action buttons */
+      .course-flip-card:has(.card-fixed-buttons:hover) .course-flip-inner,
+      .course-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner,
+      .course-flip-card:has(.genai-card-buttons:hover) .course-flip-inner,
+      .course-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+      #genai-flip-card:has(.genai-card-buttons:hover) .genai-flip-inner,
+      #genai-flip-card:has(.card-fixed-buttons:hover) .genai-flip-inner {
+        transform: rotateY(0deg) !important;
+      }
+    }
+    .course-flip-card.is-swapped .course-flip-inner,
+    .course-flip-card.is-flipped .course-flip-inner,
+    #genai-flip-card.is-swapped .genai-flip-inner,
+    #genai-flip-card.is-flipped .genai-flip-inner {
+      transform: rotateY(180deg);
+    }
+    .course-flip-front, .genai-flip-front,
+    .course-flip-back, .genai-flip-back {
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      box-sizing: border-box;
+    }
+    .course-flip-front, .genai-flip-front {
+      position: relative;
+      transform: rotateY(0deg);
+      -webkit-transform: rotateY(0deg);
+      z-index: 2;
+    }
+    .course-flip-back, .genai-flip-back {
+      position: absolute;
+      inset: 0;
+      transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      z-index: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+  }
+
+  /* Mobile Responsive (<= 768px): Flip Effect Completely Removed */
+  @media (max-width: 768px) {
+    .course-flip-card, #genai-flip-card {
+      cursor: default !important;
+    }
+    .course-flip-card-body, .genai-flip-card-body {
+      perspective: none !important;
+      -webkit-perspective: none !important;
+      min-height: auto !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+    .course-flip-inner, .genai-flip-inner {
+      transform: none !important;
+      -webkit-transform: none !important;
+      transform-style: flat !important;
+      -webkit-transform-style: flat !important;
+      transition: none !important;
+      will-change: auto !important;
+    }
+    .course-flip-card:hover .course-flip-inner,
+    .course-flip-card-body:hover .course-flip-inner,
+    .course-flip-card-body:hover .genai-flip-inner,
+    .genai-flip-card-body:hover .course-flip-inner,
+    .genai-flip-card-body:hover .genai-flip-inner,
+    .course-flip-card.is-swapped .course-flip-inner,
+    .course-flip-card.is-flipped .course-flip-inner,
+    #genai-flip-card.is-swapped .genai-flip-inner,
+    #genai-flip-card.is-flipped .genai-flip-inner {
+      transform: none !important;
+      -webkit-transform: none !important;
+    }
+    .course-flip-front, .genai-flip-front {
+      position: relative !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      backface-visibility: visible !important;
+      -webkit-backface-visibility: visible !important;
+      width: 100% !important;
+      height: auto !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+    .course-flip-back, .genai-flip-back {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+  /* Collaborative Learning Community Banner - Smooth Smoke Edge Fade */
+  .community-banner-card {
+    background-color: #1e3a8a !important;
+  }
+  @media (min-width: 768px) {
+    .community-banner-img {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 5%, rgba(0, 0, 0, 0.85) 12%, black 18%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 5%, rgba(0, 0, 0, 0.85) 12%, black 18%);
+    }
+    .community-banner-fade {
+      background: linear-gradient(to right, #1e3a8a 0%, rgba(30, 58, 138, 0.8) 4%, rgba(30, 58, 138, 0.3) 10%, transparent 18%);
+    }
+  }
+  @media (max-width: 767px) {
+    .community-banner-img {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 4%, black 14%);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 4%, black 14%);
+    }
+    .community-banner-fade {
+      background: linear-gradient(to bottom, #1e3a8a 0%, rgba(30, 58, 138, 0.6) 4%, transparent 14%);
+    }
   }
 </style>
 </head>
@@ -171,14 +248,17 @@
 
     <!-- Right Column: Programs Branch Diagram -->
     <div class="lg:col-span-7 relative">
-      <div class="relative bg-gradient-to-br from-emerald-950 via-[#064e3b] to-slate-950 border-2 border-emerald-500/50 rounded-3xl p-4 sm:p-7 shadow-2xl overflow-hidden">
+      <div class="relative bg-gradient-to-br from-[#0a192f] via-[#1e3a8a] to-[#0f172a] border-2 border-blue-400/50 rounded-3xl p-4 sm:p-7 shadow-2xl overflow-hidden">
         
-        <!-- Dark Green ambient glow overlays -->
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/40 via-transparent to-teal-950/60 pointer-events-none"></div>
-        <div class="absolute -right-16 -top-16 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-green-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- EduTech & Technology AI Background Image -->
+        <img src="src/edutech-learning-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover object-center opacity-40 pointer-events-none select-none mix-blend-screen" />
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0a192f]/70 via-[#1e3a8a]/45 to-[#0f172a]/75 pointer-events-none"></div>
+
+        <!-- Ambient InGage Blue glow overlays -->
+        <div class="absolute -right-16 -top-16 w-72 h-72 bg-blue-400/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-indigo-500/25 rounded-full blur-3xl pointer-events-none"></div>
         <!-- Background decorative dot matrix -->
-        <div class="absolute top-4 right-4 w-32 h-24 dot-pattern opacity-30 pointer-events-none"></div>
+        <div class="absolute top-4 right-4 w-32 h-24 dot-pattern opacity-25 pointer-events-none"></div>
 
         <!-- Interactive Canvas & Diagram Container -->
         <div id="diagram-canvas-container" class="relative w-full z-10">
@@ -289,7 +369,7 @@
   </div>
 
   <!-- Collaborative & Guided Learning (Full Width Row) -->
-  <div class="mt-8 rounded-3xl overflow-hidden border border-slate-200/90 shadow-soft bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 text-white w-full">
+  <div class="mt-8 rounded-3xl overflow-hidden border border-slate-200/90 shadow-soft bg-[#1e3a8a] community-banner-card text-white w-full">
     <div class="grid grid-cols-1 md:grid-cols-12 items-center">
       <div class="p-6 sm:p-8 lg:p-10 md:col-span-6 lg:col-span-5 z-10">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-bold uppercase tracking-wider mb-2">
@@ -299,19 +379,19 @@
           Collaborative &amp; Guided Learning
         </h3>
         <p class="text-xs sm:text-sm text-slate-300 mt-2 font-light leading-relaxed">
-          Join interactive study squads, peer reviews, hands-on lab sandboxes, and personalized career mentoring.
+          Join interactive study squads, peer reviews, hands-on lab , and personalized career mentoring.
         </p>
       </div>
-      <div class="md:col-span-6 lg:col-span-7 relative h-48 sm:h-56 lg:h-64">
-        <img alt="Diverse tech professionals collaborating" class="w-full h-full object-cover object-center filter contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBoxL_JL-PxGnutrIf35FmVpsMsmj0SAPn4G3X5iAcdd9kbJ-ietWyTZNyXRfmk0agWMcChMVefckD50Pk67ApAokUo-RAXDEfw4_DaqP5tHF9FEnimS4PfB_fudw7_yNy7S01xagcUuDt63xrkgSLllcbJTtDXq7dzb-uo1hOuHhwZBwj6m7lz7LjvNqpH8hwVoX0OIza1yA7YnomeWq4y-PPvQStwIuo5Bnkz5viQvV5oDY-RqxYFw"/>
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/30 to-transparent hidden md:block"></div>
+      <div class="md:col-span-6 lg:col-span-7 relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+        <img alt="Diverse tech professionals collaborating" class="w-full h-full object-cover object-center filter contrast-105 community-banner-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBoxL_JL-PxGnutrIf35FmVpsMsmj0SAPn4G3X5iAcdd9kbJ-ietWyTZNyXRfmk0agWMcChMVefckD50Pk67ApAokUo-RAXDEfw4_DaqP5tHF9FEnimS4PfB_fudw7_yNy7S01xagcUuDt63xrkgSLllcbJTtDXq7dzb-uo1hOuHhwZBwj6m7lz7LjvNqpH8hwVoX0OIza1yA7YnomeWq4y-PPvQStwIuo5Bnkz5viQvV5oDY-RqxYFw"/>
+        <div class="absolute inset-0 pointer-events-none community-banner-fade"></div>
       </div>
     </div>
   </div>
 
   <!-- 5 Feature Highlights Pill Row -->
   <div class="mt-6 sm:mt-8 bg-gradient-to-r from-lime-50/80 via-white/90 to-emerald-50/80 rounded-3xl p-3.5 sm:p-5 border border-emerald-200/70 shadow-soft">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-3">
       <!-- Highlight 1 -->
       <div class="flex items-start gap-3.5 p-3 sm:p-2 rounded-2xl bg-white/70 sm:bg-transparent border border-emerald-100/60 sm:border-0 shadow-2xs sm:shadow-none hover:bg-slate-50 transition">
         <div class="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
@@ -911,13 +991,13 @@
         <h2 class="font-sf text-xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug" style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'San Francisco', sans-serif;">
           Special Complimentary Course Choice
         </h2>
-        <p class="font-serif text-black font-semibold text-xs sm:text-sm leading-relaxed mt-1" style="font-family: 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif !important;">
+        <p class="font-sf text-black font-semibold text-xs sm:text-sm leading-relaxed mt-1" style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'San Francisco', sans-serif;">
           Enroll in <span class="text-black font-extrabold">Google Cloud Engineering</span> or <span class="text-black font-extrabold">Generative AI</span> or <span class="text-black font-extrabold">GCCF</span> and receive complimentary access to:
         </p>
         <div class="w-16 h-1 bg-purple-600 rounded-full mt-2"></div>
       </div>
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm self-start sm:self-auto">
-        <i class="fa-solid fa-gift text-xs text-yellow-300"></i> Free Complimentary Course
+        <i class="fa-solid fa-gift text-xs text-yellow-300"></i> Complimentary Course
       </div>
     </div>
 
@@ -984,7 +1064,7 @@
             </div>
 
             <!-- BACK FACE -->
-            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl px-4 pt-3.5 pb-2 sm:px-5 sm:pt-4 sm:pb-2.5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
               <!-- Back Header: Title & Badges -->
               <div>
                 <div class="flex items-center justify-between gap-2">
@@ -1148,7 +1228,7 @@
             </div>
 
             <!-- BACK FACE -->
-            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl p-4 sm:p-5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
+            <div class="course-flip-back bg-white text-slate-900 rounded-t-3xl px-4 pt-3.5 pb-2 sm:px-5 sm:pt-4 sm:pb-2.5 flex flex-col justify-between w-full h-full overflow-hidden border-b border-slate-100">
               <!-- Back Header: Title & Badges -->
               <div>
                 <div class="flex items-center justify-between gap-2">
@@ -1262,7 +1342,7 @@
 
 
 <!-- ========================================================================= -->
-<!-- SECTION 3: VALUE PROPOSITION (Ref: Screenshot ...180119.png)               -->
+<!-- SECTION 3: VALUE PROPOSITION               -->
 <!-- ========================================================================= -->
 <section class="py-8 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto" data-purpose="value-proposition" id="value-proposition">
   <div class="text-center max-w-3xl mx-auto mb-8">
@@ -1285,7 +1365,7 @@
   </div>
 
   <!-- 5 Colorful Benefit Cards in Clean Horizontal Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-3.5 relative">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 sm:gap-3.5 relative">
     
     <!-- Item 1: Purple Theme Card -->
     <div class="p-4 sm:p-6 bg-purple-50/70 rounded-2xl border-2 border-purple-200/90 shadow-2xs flex flex-row sm:flex-col items-center text-left sm:text-center gap-3.5 sm:gap-0 hover:shadow-md hover:bg-purple-100/50 hover:border-purple-400 transition-all duration-300">
@@ -1354,93 +1434,240 @@
 <!-- SECTION 4: REGISTRATION PROCESS (Ref: Screenshot ...180204.png)            -->
 <!-- ========================================================================= -->
 <section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto" data-purpose="registration-process" id="registration-process">
-  <div class="bg-gradient-to-br from-sky-50/70 via-blue-50/50 to-indigo-50/60 border-2 border-blue-100/90 rounded-3xl p-4 sm:p-8 shadow-soft">
-    
-    <div class="mb-6">
-      <h3 class="text-2xl sm:text-3xl font-extrabold text-black">
-        Registration Process
-      </h3>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1">Simple Steps to Get Started</p>
-    </div>
+  <div class="bg-gradient-to-br from-sky-50/80 via-blue-50/50 to-indigo-50/70 border-2 border-blue-100/90 rounded-3xl p-5 sm:p-8 lg:p-9 shadow-soft relative overflow-hidden">
+    <!-- Ambient backdrop accent glow -->
+    <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+    <!-- Main Grid: Header & 5 Step Cards (left 8 cols) + Full-Height Student Community Card (right 4 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
       
-      <!-- Steps 1 to 5 List (Left 8 cols) -->
-      <div class="lg:col-span-8">
-        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-4">
+      <!-- Left Column: Header + 5 Step Cards (Left 8 cols) -->
+      <div class="lg:col-span-8 flex flex-col justify-between">
+        
+        <!-- Header Section with Badge -->
+        <div class="mb-5 sm:mb-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600/10 text-blue-700 border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-route text-blue-600"></i> Ready in 5 Steps
+          </div>
+          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+            Registration Process
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 font-normal mt-1 max-w-xl">
+            Follow these 5 easy steps to secure your seat and kickstart your career journey.
+          </p>
+        </div>
+
+        
+        <!-- Desktop & Tablet: 5 Column Grid -->
+        <div class="hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 gap-2.5 lg:gap-3 relative">
           
           <!-- Step 1 -->
-          <div class="flex flex-row sm:flex-col items-center sm:items-center text-left sm:text-center gap-3 sm:gap-0 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-2xl sm:rounded-none border border-indigo-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-            <div class="relative mb-0 sm:mb-2 flex-shrink-0">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-indigo-200 text-indigo-600 flex items-center justify-center text-base sm:text-lg shadow-2xs">
-                <i class="fa-regular fa-file-lines"></i>
-              </div>
-              <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-indigo-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">1</span>
+          <div class="bg-white rounded-2xl p-3.5 border border-indigo-100/90 shadow-2xs flex flex-col justify-between relative">
+            <div class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-4 h-4 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-400 text-[9px] flex items-center justify-center hidden lg:flex">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
-            <p class="text-xs sm:text-[11px] font-medium text-slate-700 leading-snug sm:leading-tight">Complete the registration form.</p>
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 flex items-center justify-center text-lg shadow-2xs">
+                  <i class="fa-regular fa-file-lines"></i>
+                </div>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200/60">Step 01</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 leading-snug">Fill Form</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Complete your simple registration details online.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center text-[10px] font-semibold text-indigo-600">
+              <i class="fa-solid fa-circle-check text-[9px] mr-1"></i> <span>Fast Online Form</span>
+            </div>
           </div>
 
           <!-- Step 2 -->
-          <div class="flex flex-row sm:flex-col items-center sm:items-center text-left sm:text-center gap-3 sm:gap-0 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-2xl sm:rounded-none border border-blue-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-            <div class="relative mb-0 sm:mb-2 flex-shrink-0">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-blue-200 text-blue-600 flex items-center justify-center text-base sm:text-lg shadow-2xs">
-                <i class="fa-solid fa-credit-card"></i>
-              </div>
-              <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">2</span>
+          <div class="bg-white rounded-2xl p-3.5 border border-blue-100/90 shadow-2xs flex flex-col justify-between relative">
+            <div class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-4 h-4 rounded-full bg-blue-50 border border-blue-200 text-blue-400 text-[9px] flex items-center justify-center hidden lg:flex">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
-            <p class="text-xs sm:text-[11px] font-medium text-slate-700 leading-snug sm:leading-tight">Pay the one-time fee of <strong class="text-blue-700">₹499</strong>.</p>
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center text-lg shadow-2xs">
+                  <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200/60">Step 02</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 leading-snug">Pay Fee</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Pay one-time nominal fee of <strong class="text-blue-700 font-extrabold">₹499</strong> securely.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center text-[10px] font-semibold text-blue-600">
+              <i class="fa-solid fa-bolt text-[9px] mr-1"></i> <span>UPI / Card / NetBanking</span>
+            </div>
           </div>
 
           <!-- Step 3 -->
-          <div class="flex flex-row sm:flex-col items-center sm:items-center text-left sm:text-center gap-3 sm:gap-0 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-2xl sm:rounded-none border border-emerald-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-            <div class="relative mb-0 sm:mb-2 flex-shrink-0">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-emerald-200 text-emerald-600 flex items-center justify-center text-base sm:text-lg shadow-2xs">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-              </div>
-              <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">3</span>
+          <div class="bg-white rounded-2xl p-3.5 border border-teal-100/90 shadow-2xs flex flex-col justify-between relative">
+            <div class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-4 h-4 rounded-full bg-teal-50 border border-teal-200 text-teal-500 text-[9px] flex items-center justify-center hidden lg:flex">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
-            <p class="text-xs sm:text-[11px] font-medium text-slate-700 leading-snug sm:leading-tight">Upload your payment confirmation.</p>
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 text-teal-600 flex items-center justify-center text-lg shadow-2xs">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/60">Step 03</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 leading-snug">Upload Proof</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Attach your payment confirmation screenshot.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center text-[10px] font-semibold text-teal-700">
+              <i class="fa-solid fa-shield text-[9px] mr-1"></i> <span>Instant Confirmation</span>
+            </div>
           </div>
 
           <!-- Step 4 -->
-          <div class="flex flex-row sm:flex-col items-center sm:items-center text-left sm:text-center gap-3 sm:gap-0 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-2xl sm:rounded-none border border-green-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-            <div class="relative mb-0 sm:mb-2 flex-shrink-0">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-green-300 text-green-600 flex items-center justify-center text-base sm:text-lg shadow-2xs">
-                <i class="fa-brands fa-whatsapp text-lg sm:text-xl"></i>
-              </div>
-              <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">4</span>
+          <div class="bg-white rounded-2xl p-3.5 border border-emerald-100/90 shadow-2xs flex flex-col justify-between relative">
+            <div class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-4 h-4 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-500 text-[9px] flex items-center justify-center hidden lg:flex">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
-            <p class="text-xs sm:text-[11px] font-medium text-slate-700 leading-snug sm:leading-tight">Get added to official WhatsApp group.</p>
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 flex items-center justify-center text-xl shadow-2xs">
+                  <i class="fa-brands fa-whatsapp text-emerald-600"></i>
+                </div>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">Step 04</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900 leading-snug">Join Group</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Get auto-added to the official student WhatsApp group.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center text-[10px] font-semibold text-emerald-700">
+              <i class="fa-solid fa-users text-[9px] mr-1"></i> <span>Live Study Squad</span>
+            </div>
           </div>
 
           <!-- Step 5 -->
-          <div class="flex flex-row sm:flex-col items-center sm:items-center text-left sm:text-center gap-3 sm:gap-0 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-2xl sm:rounded-none border border-purple-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-            <div class="relative mb-0 sm:mb-2 flex-shrink-0">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-purple-200 text-purple-600 flex items-center justify-center text-base sm:text-lg shadow-2xs">
-                <i class="fa-solid fa-graduation-cap"></i>
+          <div class="bg-white rounded-2xl p-3.5 border border-purple-100/90 shadow-2xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 text-purple-600 flex items-center justify-center text-lg shadow-2xs">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200/60">Step 05</span>
               </div>
-              <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-purple-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">5</span>
+              <h4 class="text-sm font-bold text-slate-900 leading-snug">Start Learning</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Attend live sessions &amp; 1-on-1 career mentoring.</p>
             </div>
-            <p class="text-xs sm:text-[11px] font-medium text-slate-700 leading-snug sm:leading-tight">Begin live sessions &amp; career mentoring.</p>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center text-[10px] font-semibold text-purple-700">
+              <i class="fa-solid fa-award text-[9px] mr-1"></i> <span>Classes &amp; Certificate</span>
+            </div>
           </div>
 
         </div>
+
+        <!-- Mobile (<640px): Compact Stepper List -->
+        <div class="sm:hidden flex flex-col gap-2.5">
+          <!-- Step 1 -->
+          <div class="bg-white rounded-2xl p-3 border border-indigo-100/90 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-base flex-shrink-0">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <h4 class="text-xs font-bold text-slate-900">Fill Form</h4>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">Step 01</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-tight">Complete your registration details online.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white rounded-2xl p-3 border border-blue-100/90 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-base flex-shrink-0">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <h4 class="text-xs font-bold text-slate-900">Pay Fee</h4>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">Step 02</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-tight">Pay one-time fee of <strong class="text-blue-700 font-bold">₹499</strong> securely.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white rounded-2xl p-3 border border-teal-100/90 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-base flex-shrink-0">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <h4 class="text-xs font-bold text-slate-900">Upload Proof</h4>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded">Step 03</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-tight">Attach payment confirmation screenshot.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-white rounded-2xl p-3 border border-emerald-100/90 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base flex-shrink-0">
+              <i class="fa-brands fa-whatsapp text-emerald-600"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <h4 class="text-xs font-bold text-slate-900">Join Group</h4>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">Step 04</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-tight">Auto-added to official student WhatsApp group.</p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="bg-white rounded-2xl p-3 border border-purple-100/90 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-base flex-shrink-0">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <h4 class="text-xs font-bold text-slate-900">Start Learning</h4>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded">Step 05</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-tight">Attend live sessions &amp; career mentoring.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Student Group Thumbnail Image (Right 4 cols) -->
-      <div class="lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative h-48 sm:h-52">
-        <img alt="Students learning together with InGage" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYpbqIrU8VJg_qCKT0aukcIa9H5bjy6g75-_vCSyTX5RTU57bEEljzoGqx8HAme2Eb79lLPJNwfA7QByIp4F34uzzc4AZTsuvAXA2SgRcBqw3JjZ_WcsK-jtOQpfMVcbd9yQ-uwHRT4M7z-Fl9Gj9yjHxv5t_IoDaI2g5SvTYBOGfShJwMBP4bstA8G_fEsOC99zRJ5cx7BgS9416go88wb9yLx9Ht5vUzMQ5Nl1IU3MHTfoKcdJ3dnQ"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent flex items-end p-4">
-          <span class="text-white text-xs sm:text-sm font-semibold flex items-center gap-2">
-            <i class="fa-solid fa-users text-amber-400"></i> Join 15,000+ Students Already Enrolled
-          </span>
+      <!-- Student Community Visual Banner Card (Right 4 cols) -->
+      <div class="lg:col-span-4 rounded-3xl overflow-hidden border border-slate-200/90 shadow-md relative min-h-[260px] sm:min-h-[280px] lg:min-h-full flex flex-col justify-end">
+        <img alt="Students learning together with InGage" class="absolute inset-0 w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYpbqIrU8VJg_qCKT0aukcIa9H5bjy6g75-_vCSyTX5RTU57bEEljzoGqx8HAme2Eb79lLPJNwfA7QByIp4F34uzzc4AZTsuvAXA2SgRcBqw3JjZ_WcsK-jtOQpfMVcbd9yQ-uwHRT4M7z-Fl9Gj9yjHxv5t_IoDaI2g5SvTYBOGfShJwMBP4bstA8G_fEsOC99zRJ5cx7BgS9416go88wb9yLx9Ht5vUzMQ5Nl1IU3MHTfoKcdJ3dnQ"/>
+        
+        <!-- Top floating badge -->
+        <div class="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-md">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Entroll Active
+        </div>
+
+        <!-- Bottom overlay card -->
+        <div class="relative z-10 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent p-5 sm:p-6 pt-12 text-white">
+          <div class="flex items-center gap-1 text-amber-400 text-xs mb-1.5">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <span class="text-white font-bold ml-1 text-xs">4.9 / 5 Rating</span>
+          </div>
+          <h4 class="text-base sm:text-lg font-black text-white leading-tight">
+            Join 15,000+ Enrolled Learners
+          </h4>
+          <p class="text-xs text-slate-300 mt-1 leading-snug font-light">
+            Collaborate in squads, build capstones, and get certified.
+          </p>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-<!-- END: Section 5 (Registration Process) -->
+<!-- END: Section 4 (Registration Process) -->
 
 
 <!-- ========================================================================= -->
@@ -1457,10 +1684,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
       
       <!-- Left Column: Headline & Subtext -->
-      <div class="lg:col-span-8">
+      <div class="lg:col-span-7">
         <!-- Good News Pill Badge -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-600 text-white rounded-full text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
-          <i class="fa-solid fa-bullhorn text-xs text-amber-300"></i>
+        <div class="-mt-3 inline-flex items-center gap-3 sm:gap-3.5 px-5 sm:px-7 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white rounded-full text-lg sm:text-xl lg:text-2xl font-black uppercase tracking-wider mb-4 shadow-md shadow-blue-500/25 border border-white/20">
+          <i class="fa-solid fa-bullhorn text-lg sm:text-xl lg:text-2xl text-amber-300"></i>
           <span>GOOD NEWS!</span>
         </div>
 
@@ -1477,29 +1704,46 @@
         </p>
       </div>
 
-      <!-- Right Column: Certification Feature Card -->
-      <div class="lg:col-span-4 flex justify-center lg:justify-end">
-        <div class="border-2 border-blue-200/90 rounded-2xl p-5 sm:p-6 bg-white text-center shadow-card max-w-xs w-full relative overflow-hidden hover:border-blue-400 hover:shadow-lg transition-all duration-300">
+      <!-- Right Column: Horizontal Certification Feature Card -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end">
+        <div class="border-2 border-blue-200/90 rounded-2xl p-4 sm:p-5 bg-white shadow-card w-full max-w-md relative overflow-hidden hover:border-blue-400 hover:shadow-lg transition-all duration-300">
           
-          <!-- Top Industry Recognized Badge -->
-          <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] sm:text-[11px] font-black tracking-wider px-3.5 py-1 rounded-full uppercase mb-4 shadow-2xs">
-            <i class="fa-solid fa-crown text-amber-900 text-xs"></i> INDUSTRY-RECOGNIZED
-          </span>
+          <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+            
+            <!-- Left Side: Badge + Google Logo -->
+            <div class="flex flex-col items-center justify-center flex-shrink-0">
+              <!-- Top Industry Recognized Badge -->
+              <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] sm:text-[11px] font-black tracking-wider px-3 py-1 rounded-full uppercase mb-2.5 shadow-2xs">
+                <i class="fa-solid fa-crown text-amber-900 text-xs"></i> INDUSTRY-RECOGNIZED
+              </span>
 
-          <!-- Official Full Google Logo -->
-          <div class="h-16 px-5 py-2.5 mx-auto rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center mb-3 max-w-[180px]">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" class="h-8 sm:h-9 w-auto object-contain select-none" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-3xl font-bold tracking-tight select-none font-sf\' style=\'letter-spacing:-0.03em;\'><span class=\'text-[#4285F4]\'>G</span><span class=\'text-[#EA4335]\'>o</span><span class=\'text-[#FBBC05]\'>o</span><span class=\'text-[#4285F4]\'>g</span><span class=\'text-[#34A853]\'>l</span><span class=\'text-[#EA4335]\'>e</span></span>';" />
+              <!-- Official Google Logo Box -->
+              <div class="h-14 w-36 px-3 py-2 rounded-xl bg-slate-50 border border-slate-100 shadow-2xs flex items-center justify-center">
+                <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" class="h-7 w-auto object-contain select-none" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-2xl font-bold tracking-tight select-none font-sf\' style=\'letter-spacing:-0.03em;\'><span class=\'text-[#4285F4]\'>G</span><span class=\'text-[#EA4335]\'>o</span><span class=\'text-[#FBBC05]\'>o</span><span class=\'text-[#4285F4]\'>g</span><span class=\'text-[#34A853]\'>l</span><span class=\'text-[#EA4335]\'>e</span></span>';" />
+              </div>
+            </div>
+
+            <!-- Vertical Divider on sm+ -->
+            <div class="hidden sm:block w-[1px] self-stretch bg-slate-200/80 my-1"></div>
+
+            <!-- Right Side: Certification Text & Official Partner -->
+            <div class="text-center sm:text-left flex-1 min-w-0">
+              <h3 class="text-sm sm:text-base font-black text-slate-900 uppercase tracking-tight font-sf leading-tight">
+                GLOBAL CERTIFICATION
+              </h3>
+              <p class="text-[10px] sm:text-[11px] font-bold text-blue-700 tracking-wider uppercase mt-1 leading-tight">
+                RECOGNIZED. RESPECTED.<br/>
+                WORLDWIDE.
+              </p>
+
+              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-center sm:justify-start gap-1.5 text-xs font-bold text-emerald-700">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+                <span>Official Partner</span>
+              </div>
+            </div>
+
           </div>
 
-          <h3 class="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight font-sf">GLOBAL CERTIFICATION</h3>
-          <p class="text-[11px] font-bold text-blue-700 tracking-wider uppercase mt-1 leading-tight">
-            RECOGNIZED. RESPECTED.<br/>
-            WORLDWIDE.
-          </p>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700">
-            <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> Official partner
-          </div>
         </div>
       </div>
 
@@ -1729,13 +1973,13 @@
         </div>
         <div>
           <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-            If you have any questions, simply reply to this email or contact the
+            If you have any questions,email or contact the
             <strong class="text-slate-900">InGage EduTech</strong> team.
           </p>
 
           <a
             class="mt-4 inline-flex items-center gap-3.5 px-4 sm:px-5 py-3 rounded-2xl bg-slate-50 hover:bg-blue-50/80 border-2 border-slate-200/90 hover:border-blue-400 transition-all duration-200 group shadow-sm w-full sm:w-auto"
-            href="mailto:info@myingageedutech.com"
+            href="mailto:info@ingageedutech.com"
           >
             <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center text-base sm:text-lg flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
               <i class="fa-solid fa-envelope"></i>
@@ -1745,7 +1989,7 @@
                 Email Us
               </span>
               <span class="text-xs sm:text-sm md:text-[15px] text-blue-700 font-extrabold tracking-tight mt-0.5 break-all sm:break-normal">
-                info@myingageedutech.com
+                info@ingageedutech.com
               </span>
             </div>
           </a>
